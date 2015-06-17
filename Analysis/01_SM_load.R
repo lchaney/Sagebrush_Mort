@@ -5,4 +5,4 @@
 #==============================================================================================#
 
 #this data set has survival (last data collection in May 2015) for all three gardens
-	surv3d <- read.csv("~/Documents/Sagebrush/Survival 23gardsurv_2015.csv")
+	surv3d <- read.csv("~/Documents/Sagebrush/Manuscript Scripts and Data/Data/3gardsurv_2015.csv")
