@@ -31,7 +31,27 @@
 # Printing output for 3 garden survival
 	
 	#print 2 by 2 kaplain meyer plot for all 3 gardens
-	
+		#change parameters for a 2 by 2 plot
+		par(mfrow=c(2,2))
+
+			#all three gardens
+			gar3plot
+			gar3leg
+			
+			#ephraim
+			ephplot
+			ephleg
+			
+			#majors
+			majplot
+			majleg
+			
+			#orchard
+			orchplot
+			orchleg			
+			
+		#reset parameters back to 1 by 1
+		par(mfrow=c(1,1))
 	
 	#save above plot to figures folder
 	
