@@ -55,8 +55,6 @@
 			par(mfrow=c(1,1))
 
 
-
-
 	#summary of surviorship
 	surv3summary <- survfit(Surv(time, death)~ strata(garden), data=surv3d)
 
