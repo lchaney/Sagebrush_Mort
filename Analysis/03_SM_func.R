@@ -4,11 +4,27 @@
 # This script is used for FUNCTIONS needed for the Chaney et al 2015 Sagebrush mortatlity paper
 #==============================================================================================#
 
-
+#==============================================================================================#
 #3 garden survival
 
-	#loard survival package
+	#load needed packages
 	library(survival)
+	library(ggplot2)
+	
+	#function to be able to source from GIT (https://gist.github.com/28e06a0ac1fc6d29af3b.git)
+	source_https <- function(url, ...) {
+	  # load package
+	  require(RCurl)
+	 
+	  # parse and evaluate each .R script
+	  sapply(c(url, ...), function(u) {
+	    eval(parse(text = getURL(u, followlocation = TRUE, cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))), envir = .GlobalEnv)
+	  })
+	}
+ 
+	#load package from gitHub -- ggkm -- provides use of ggplot to create kaplain meyer plots
+	source_https("https://github.com/dmenne/dmisc2/raw/master/R/ggkm.R")
+	
 	
 	#fit cox ph model to use in kaplain meyer plots
 	fitcph_garden <- coxph(Surv(time, death)~strata(garden), data=surv3d)
@@ -55,3 +71,5 @@
 
 	#sample size tables
 	surv3dsample <- with(surv3d, table(pop, type, garden))
+
+#==============================================================================================#
