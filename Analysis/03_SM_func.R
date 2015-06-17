@@ -5,8 +5,7 @@
 #==============================================================================================#
 
 #==============================================================================================#
-#3 garden survival
-
+#packages
 	#load needed packages
 	library(survival)
 	library(ggplot2)
@@ -23,9 +22,16 @@
 	}
  
 	#load package from gitHub -- ggkm -- provides use of ggplot to create kaplain meyer plots
-	source_https("https://github.com/dmenne/dmisc2/raw/master/R/ggkm.R")
-	
-	
+	source_https("https://raw.githubusercontent.com/dmenne/dmisc2/master/R/ggkm.R")
+#==============================================================================================#
+
+
+
+
+#==============================================================================================#
+#3 garden survival
+
+
 	#fit cox ph model to use in kaplain meyer plots
 	fitcph_garden <- coxph(Surv(time, death)~strata(garden), data=surv3d)
 	fitcph_typeO <- coxph(Surv(time, death)~strata(type), data=sdat_O)
