@@ -10,6 +10,7 @@
 	library(survival)
 	library(ggplot2)
 	library(GGally)
+	library(cowplot)
 	
 #==============================================================================================#
 
@@ -75,6 +76,9 @@
 								   guides(linetype = FALSE) + 
 								   theme_minimal() +
 								   theme(axis.line = element_line(color = "black", size = .25))
+
+		#plot kaplain meyer plots into a 2 x 2 grids
+		km22plot <- plot_grid(gar3plot, ephplot, majplot, orchplot, labels = c("A", "B", "C", "D"), ncol = 2)
 
 	#summary of surviorship
 	surv3summary <- survfit(Surv(time, death)~ strata(garden), data=surv3d)

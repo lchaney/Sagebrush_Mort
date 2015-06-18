@@ -31,30 +31,20 @@
 # Printing output for 3 garden survival
 	
 	#print 2 by 2 kaplain meyer plot for all 3 gardens
-		#change parameters for a 2 by 2 plot
-		par(mfrow=c(2,2))
-
-			#all three gardens
+	km22plot
+	
+			#or individual km plots
 			gar3plot
-			gar3leg
-			
-			#ephraim
 			ephplot
-			ephleg
-			
-			#majors
 			majplot
-			majleg
-			
-			#orchard
 			orchplot
-			orchleg			
-			
-		#reset parameters back to 1 by 1
-		par(mfrow=c(1,1))
 	
 	#save above plot to figures folder
-	
+	save_plot("~/Documents/Sagebrush/Manuscript Figures/SF1.pdf", km22plot,
+          ncol = 2,
+          nrow = 2,
+          base_aspect_ratio = 1.3
+          )
 
 	#print summary of survivorship
 	surv3summary
