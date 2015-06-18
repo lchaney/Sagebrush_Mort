@@ -30,21 +30,26 @@
 				#all three gardens
 				gar3plot <- ggsurv(sfit_garden, surv.col = "black",
 								   cens.col = "black") +
-								   theme_minimal() +
-								   theme(axis.line = element_line(color = "black", size = .25))+
 								   scale_linetype_manual(name="Garden",
 								   		values = 2:4) +
-								   guides(color=FALSE)
+								   guides(color = FALSE) +
+								   theme_minimal() +
+								   theme(axis.line = element_line(color = "black", size = .25))
 
 
 				#ephraim
-				ephplot <- plot(survfit(fitcph_typeE), col = 2:6, lty=2, lwd=4)
-					ephleg <- legend(1, 0.3, 
-				       legend = levels(surv3d$type), 
-				       lty = 2, 
-				       col = 2:6,
-				       lwd=3,
-				       title = "Ephraim garden")
+				ephplot <- ggsurv(sfit_typeO, lty.est = 2, plot.cens = FALSE) +
+								   scale_color_manual(name="Ephraim",
+								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
+								   		values = c(T4x = "red4",
+								   				   T2x = "orange1",
+								   				   W4x = "darkgreen",
+								   				   V2x = "darkblue",
+								   				   V4x = "purple4")) +
+								   guides(linetype = FALSE) + 
+								   theme_minimal() +
+								   theme(axis.line = element_line(color = "black", size = .25))
+
 				#Majors
 				majplot <- plot(survfit(fitcph_typeM), col = 2:6, lty=3, lwd=4)
 					majleg <- legend(1, 0.3, 
