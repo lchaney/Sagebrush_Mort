@@ -43,8 +43,7 @@
 	save_plot("~/Documents/Sagebrush/Manuscript Figures/SF1.pdf", km22plot,
           ncol = 2,
           nrow = 2,
-          base_aspect_ratio = 2
-          )
+          base_aspect_ratio = 2)
 
 	#print summary of survivorship
 	surv3summary
