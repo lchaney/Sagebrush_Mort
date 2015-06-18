@@ -4,7 +4,7 @@
 # This script is used to CLEAN data needed for the Chaney et al 2015 Sagebrush mortatlity paper
 #==============================================================================================#
 
-
+#==============================================================================================#
 #CLEANING UP surv3d data
 
 	#resave type so that they appear in the following order
@@ -77,9 +77,75 @@
 		
 		#use row bind to combine the 3 garden datasets
 		surv3dd <- rbind(sdat_E, sdat_M, sdat_O)
-		
+#==============================================================================================#
+
+
+#==============================================================================================#		
 #CLEANING UP climate data
 	
 	#tell R to treat the date in a format it can understand month day year to year, month, day
 	#transforms 1/1/10 to 2010-01-01
 	climate$Date <- as.Date(climate$Date, "%m/%d/%y")
+#==============================================================================================#
+
+
+#==============================================================================================#
+#CLEANING UP survd data
+
+	#add derived climate variables
+		svd <- with(survd, data.frame(
+	     sample,
+	     pop,
+	     garden,
+	     ssp,
+	     ploidy,
+	     type,
+	     timedeath,
+	     time,
+	     death,
+	     #long,
+	     #lat,
+	     #elev,
+	     tdiff=mtwm-mtcm,
+	     adi = (dd5**0.5)/map,
+	     adimindd0= ((dd5**0.5)/map)*mmindd0,
+	     d100,
+	     dd0,
+	     dd5,
+	     fday,
+	     ffp,
+	     gsdd5,
+	     gsp,
+	     dd5mtcm = dd5*mtcm,
+	     pratio = gsp/map,
+	     gspdd5 =(gsp*dd5)/1000,
+	     gspmtcm =(gsp*mtcm)/1000,
+	     gsptd  =(gsp*(mtwm-mtcm))/100,
+	     map=map,
+	     mapdd5 =(map*dd5)/1000,
+	     mapmtcm =(map*mtcm)/1000,
+	     maptd  =(map*(mtwm-mtcm))/100,
+	     mat=mat,
+	     mmindd0=mmindd0,
+	     mmax=mmax,
+	     mmin=mmin,
+	     mtcm=mtcm,
+	     mtcmgsp =mtcm/gsp,
+	     mtcmmap =mtcm/map,
+	     mtwm=mtwm,
+	     sday=sday,
+	     sdi=(gsdd5**0.5)/gsp,
+	     sdimindd0=((gsdd5**0.5)/gsp)*mmindd0,
+	     tdgsp  =(mtwm-mtcm)/gsp,
+	     tdmap  =(mtwm-mtcm)/map,
+	     smrpb,
+	     #smrsprpb,
+	     sprp,
+	     winp,
+	     smrp,
+	     sdimtcm=((gsdd5**0.5)/gsp)*mtcm,
+	     dd0map=dd0/map,
+	     dd0gsp=dd0/gsp))
+		
+		#reorder type
+		svd$type <- factor(svd$type, levels = c("T4x", "T2x", "W4x", "V2x", "V4x"))

@@ -4,6 +4,8 @@
 # This script is used to LOAD data needed for the Chaney et al 2015 Sagebrush mortatlity paper
 #==============================================================================================#
 
+#=== you may need to change source file location ===#
+
 #this data set has survival (last data collection in May 2015) for all three gardens
 
 	surv3d <- read.csv("~/Documents/Sagebrush/Manuscript Scripts and Data/Data/3gardsurv_2015.csv")
@@ -19,3 +21,7 @@
 	climate <- read.csv("~/Documents/Sagebrush/Manuscript Scripts and Data/Data/daily_temps3.csv")
 
 		#note that moving averages were calculated then copied into excel (due to missing values, I couldn't figure out how match them up in R)
+		
+		
+#this data set is just Ephraim survival with Provenance climate data (i.e., seed source population climate)
+	survd <- read.csv("~/Documents/Sagebrush/Manuscript Scripts and Data/Data/surv2.csv")

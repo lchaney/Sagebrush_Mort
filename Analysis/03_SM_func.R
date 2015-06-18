@@ -169,4 +169,59 @@
 			#merge the death plot and the climate plot			
 			
 			deathclim <- arrangeGrob(clim_graph, death2, ncol=1, heights=c(4, 0.9))
-				
+
+#==============================================================================================#
+
+
+
+#==============================================================================================#
+#ephraim survival data
+
+	#fit different survival regressions to determine what distribution is best
+		t_exp <- survreg(Surv(time,death) ~ type, data=svd, dist="exponential")
+		t_log <- survreg(Surv(time,death) ~ type, data=svd, dist="loglogistic")
+		t_wei <- survreg(Surv(time,death) ~ type, data=svd, dist="weibull")
+		t_lnorm <- survreg(Surv(time,death) ~ type, data=svd, dist="lognormal")
+			
+			s_t_exp <- summary(t_exp)$loglik
+			s_t_log <- summary(t_log)$loglik
+			s_t_wei <- summary(t_wei)$loglik
+			s_t_lnorm <- summary(t_lnorm)$loglik
+			####choose lognormal, has lowest AIC calculated by 
+			######   AIC  =2logL+ 2p were p = 2
+		
+	#fit lognormal survival regression		
+		sx <- survreg(Surv(time, death)~type, data=svd, dist="lognormal")
+		s_sx <- summary(sx)
+		
+#NEED TO UPDATE THIS!!!
+		
+	#Kaplien Meyer plot with survival regression curve generated
+				fitcph_type <- coxph(Surv(time, death)~strata(type), data=svd)
+				plot(survfit(fitcph_type), col = 1:5)
+				legend(1, 0.3, 
+				       legend = levels(svd$type), 
+				       lty = 1, 
+				       col = 1:5,
+				       title = "Survivorship by type")
+		    sl <- survreg(Surv(time, death)~type, data=svd, dist="lognormal")
+    
+			    lines(predict(sl, newdata=list(type="T4x"),
+			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=1, lty=4)
+			    
+			    lines(predict(sl, newdata=list(type="T2x"),
+			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=2, lty=4)
+			    
+			    lines(predict(sl, newdata=list(type="W4x"),
+			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=3, lty=4)
+			    
+			    lines(predict(sl, newdata=list(type="V2x"),
+			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=4, lty=4)
+			    
+			    lines(predict(sl, newdata=list(type="V4x"),
+			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=5, lty=4)
+			
+			#http://stackoverflow.com/questions/9151591/how-to-plot-the-survival-curve-generated-by-survreg-package-survival-of-r
+			
+		#Use a log rank test to see if there is a difference in survival by TYPE
+		survdiff(formula = Surv(time, death) ~ type, data = svd)		

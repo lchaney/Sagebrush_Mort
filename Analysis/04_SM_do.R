@@ -65,3 +65,19 @@
 	
 	#save above plot to figures folder
 	save_plot("~/Documents/Sagebrush/Manuscript Figures/climgraph.png", deathclim, base_aspect_ratio = 2)
+
+#==============================================================================================#
+
+
+
+#==============================================================================================#
+#Ephraim survival data
+
+	#print survival regression (Table 2)
+	s_sx
+	
+	#print kaplien meyer plot with survival regression curves (Figure 1)
+	
+	
+	#save above plot to figures folder
+	#fig1
