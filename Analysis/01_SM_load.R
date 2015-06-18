@@ -5,6 +5,7 @@
 #==============================================================================================#
 
 #this data set has survival (last data collection in May 2015) for all three gardens
+
 	surv3d <- read.csv("~/Documents/Sagebrush/Manuscript Scripts and Data/Data/3gardsurv_2015.csv")
 
 
@@ -14,5 +15,7 @@
 #Ephraim data accessed here: http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=2126&state=ut
 #Orchards data accessed here: http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=674&state=id
 #Majors data collected for data logger temperature probe
-	climate <- read.csv("~/Documents/Sagebrush/Older Analysis/Climate/daily_temps3.csv")
+
+	climate <- read.csv("~/Documents/Sagebrush/Manuscript Scripts and Data/Data/daily_temps3.csv")
+
 		#note that moving averages were calculated then copied into excel (due to missing values, I couldn't figure out how match them up in R)

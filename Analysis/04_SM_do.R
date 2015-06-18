@@ -54,4 +54,11 @@
 
 #==============================================================================================#
 	
- 
+#==============================================================================================#
+# Printing output for climate
+	
+	#print death and climate plot for all 3 gardens
+	deathclim
+	
+	#save above plot to figures folder
+	#save_plot("~/Documents/Sagebrush/Manuscript Figures/______.pdf", deathclim, base_aspect_ratio = 2)
