@@ -40,7 +40,7 @@
 			#orchplot
 	
 	#save above plot to figures folder
-	save_plot("~/Documents/Sagebrush/Manuscript Figures/SF1.pdf", km22plot,
+	save_plot("~/Documents/Sagebrush/Manuscript Figures/SF1.png", km22plot,
           ncol = 2,
           nrow = 2,
           base_aspect_ratio = 2)
@@ -64,4 +64,4 @@
 		#clim_graph
 	
 	#save above plot to figures folder
-	#save_plot("~/Documents/Sagebrush/Manuscript Figures/______.pdf", deathclim, base_aspect_ratio = 2)
+	save_plot("~/Documents/Sagebrush/Manuscript Figures/climgraph.png", deathclim, base_aspect_ratio = 2)

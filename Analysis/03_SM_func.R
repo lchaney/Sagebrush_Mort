@@ -162,7 +162,7 @@
 				   	theme(legend.title=element_blank(), 
 				   		  plot.margin = unit(c(0.5,0.5,-1,0.5), "lines"), 
 				   		  #plot.margins #top, #right, #bottom, #left
-				   		  legend.position=c(0.95,0.15),
+				   		  legend.position=c(0.93, 0.9),
 				   		  axis.text.x = element_blank(),
 				   		  axis.ticks.x = element_blank())
 				   	
