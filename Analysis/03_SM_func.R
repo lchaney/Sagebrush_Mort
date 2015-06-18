@@ -38,7 +38,7 @@
 
 
 				#ephraim
-				ephplot <- ggsurv(sfit_typeO, lty.est = 2, plot.cens = FALSE) +
+				ephplot <- ggsurv(sfit_typeE, lty.est = 2, plot.cens = FALSE) +
 								   scale_color_manual(name="Ephraim",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
 								   		values = c(T4x = "red4",
@@ -51,21 +51,30 @@
 								   theme(axis.line = element_line(color = "black", size = .25))
 
 				#Majors
-				majplot <- plot(survfit(fitcph_typeM), col = 2:6, lty=3, lwd=4)
-					majleg <- legend(1, 0.3, 
-				       legend = levels(surv3d$type), 
-				       lty = 3, 
-				       col = 2:6,
-				       lwd=3,
-				       title = "Majors Flat garden")
-				#Orchard
-				orchplot <- plot(survfit(fitcph_typeO), col = 2:6, lty=4, lwd=4)
-					orchleg <- legend(1, 0.3, 
-				       legend = levels(surv3d$type), 
-				       lty = 4, 
-				       col = 2:6,
-				       lwd=3,
-				       title = "Orchard garden")	
+				majplot <- ggsurv(sfit_typeM, lty.est = 3, plot.cens = FALSE) +
+								   scale_color_manual(name="Majors",
+								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
+								   		values = c(T4x = "red4",
+								   				   T2x = "orange1",
+								   				   W4x = "darkgreen",
+								   				   V2x = "darkblue",
+								   				   V4x = "purple4")) +
+								   guides(linetype = FALSE) + 
+								   theme_minimal() +
+								   theme(axis.line = element_line(color = "black", size = .25))
+
+			#Orchard
+				orchplot <- ggsurv(sfit_typeO, lty.est = 4, plot.cens = FALSE) +
+								   scale_color_manual(name="Orchards",
+								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
+								   		values = c(T4x = "red4",
+								   				   T2x = "orange1",
+								   				   W4x = "darkgreen",
+								   				   V2x = "darkblue",
+								   				   V4x = "purple4")) +
+								   guides(linetype = FALSE) + 
+								   theme_minimal() +
+								   theme(axis.line = element_line(color = "black", size = .25))
 
 	#summary of surviorship
 	surv3summary <- survfit(Surv(time, death)~ strata(garden), data=surv3d)
