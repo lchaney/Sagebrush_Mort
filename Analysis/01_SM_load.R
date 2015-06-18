@@ -7,3 +7,12 @@
 #this data set has survival (last data collection in May 2015) for all three gardens
 	surv3d <- read.csv("~/Documents/Sagebrush/Manuscript Scripts and Data/Data/3gardsurv_2015.csv")
 
+
+
+#climate data set has daily avg, min, and max temperature for three garden sites
+#Date ranges: 1/1/10 - 5/8/15 for Ephraim and Orchards and 10/20/10 - 3/13/14 for Majors
+#Ephraim data accessed here: http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=2126&state=ut
+#Orchards data accessed here: http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=674&state=id
+#Majors data collected for data logger temperature probe
+	climate <- read.csv("~/Documents/Sagebrush/Older Analysis/Climate/daily_temps3.csv")
+		#note that moving averages were calculated then copied into excel (due to missing values, I couldn't figure out how match them up in R)
