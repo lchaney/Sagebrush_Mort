@@ -34,9 +34,12 @@
 								   scale_linetype_manual(name="Garden",
 								   		values = 2:4) +
 								   guides(color = FALSE) +
+								   xlim(0, 60) + ylim(0, 1) +
 								   theme_minimal() +
-								   theme(axis.line = element_line(color = "black", size = .25))
-
+								   theme(axis.line = element_line(color = "black", size = .25),
+								   		 legend.position = c(0.1, 0.25),
+								   		 legend.title = element_text(face = "italic"),
+								   		 legend.background = element_rect(colour = "gray"))
 
 				#ephraim
 				ephplot <- ggsurv(sfit_typeE, lty.est = 2, plot.cens = FALSE) +
@@ -47,10 +50,13 @@
 								   				   W4x = "darkgreen",
 								   				   V2x = "darkblue",
 								   				   V4x = "purple4")) +
-								   guides(linetype = FALSE) + 
+								   guides(linetype = FALSE) +
+								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
-								   theme(axis.line = element_line(color = "black", size = .25))
-
+								   theme(axis.line = element_line(color = "black", size = .25),
+								   		 legend.position = c(0.1, 0.25),
+								   		 legend.title = element_text(face = "italic"),
+								   		 legend.background = element_rect(colour = "gray"))
 				#Majors
 				majplot <- ggsurv(sfit_typeM, lty.est = 3, plot.cens = FALSE) +
 								   scale_color_manual(name="Majors",
@@ -60,10 +66,13 @@
 								   				   W4x = "darkgreen",
 								   				   V2x = "darkblue",
 								   				   V4x = "purple4")) +
-								   guides(linetype = FALSE) + 
+								   guides(linetype = FALSE) +
+								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
-								   theme(axis.line = element_line(color = "black", size = .25))
-
+								   theme(axis.line = element_line(color = "black", size = .25),
+								   		 legend.position = c(0.1, 0.25),
+								   		 legend.title = element_text(face = "italic"),
+								   		 legend.background = element_rect(colour = "gray"))
 			#Orchard
 				orchplot <- ggsurv(sfit_typeO, lty.est = 4, plot.cens = FALSE) +
 								   scale_color_manual(name="Orchards",
@@ -73,9 +82,13 @@
 								   				   W4x = "darkgreen",
 								   				   V2x = "darkblue",
 								   				   V4x = "purple4")) +
-								   guides(linetype = FALSE) + 
+								   guides(linetype = FALSE) +
+								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
-								   theme(axis.line = element_line(color = "black", size = .25))
+								   theme(axis.line = element_line(color = "black", size = .25),
+								   		 legend.position = c(0.1, 0.25),
+								   		 legend.title = element_text(face = "italic"),
+								   		 legend.background = element_rect(colour = "gray"))
 
 		#plot kaplain meyer plots into a 2 x 2 grids
 		km22plot <- plot_grid(gar3plot, ephplot, majplot, orchplot, labels = c("A", "B", "C", "D"), ncol = 2)
