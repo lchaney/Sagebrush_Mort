@@ -34,10 +34,10 @@
 	km22plot
 	
 			#or individual km plots
-			gar3plot
-			ephplot
-			majplot
-			orchplot
+			#gar3plot
+			#ephplot
+			#majplot
+			#orchplot
 	
 	#save above plot to figures folder
 	save_plot("~/Documents/Sagebrush/Manuscript Figures/SF1.pdf", km22plot,
@@ -58,6 +58,10 @@
 	
 	#print death and climate plot for all 3 gardens
 	deathclim
+	
+		#or individual graphs
+		#death2
+		#clim_graph
 	
 	#save above plot to figures folder
 	#save_plot("~/Documents/Sagebrush/Manuscript Figures/______.pdf", deathclim, base_aspect_ratio = 2)
