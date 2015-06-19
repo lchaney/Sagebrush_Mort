@@ -81,3 +81,23 @@
 	
 	#save above plot to figures folder
 	#fig1
+	
+	#Print log rank test for survival curves
+	svdlrtest
+	
+	#print posthoc pairwise comparison table of chisquare log-rank test 
+	lrchisqtable
+	
+		#and associated p-values
+		pval_lrchisqtable
+		
+		#new bonferoni corrected p-value for significane
+		newbfp
+		
+		#median survival
+		medsurv
+		
+	#probability of survival at different months -- column survival gives you those times 
+	probsurv1
+	probsurv2	
+		
