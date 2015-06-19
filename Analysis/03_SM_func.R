@@ -247,10 +247,12 @@
 			colnames(lrchisqtable) <- unique(svd$type)
 			
 			#and p-values for the table
-			pval_lrchisqtable <- round(pchisq(chisqtable, 1, lower.tail=FALSE), 5)
+			pval_lrchisqtable <- round(pchisq(lrchisqtable, 1, lower.tail=FALSE), 5)
 			
 			#need to correct for multiple comparisons now, we will use the conservative bonferroni
-			newbfp <- (0.05 / typesize)
+			newbfp <- (0.05 / (10))
+				#replace 10 for how many pairwise comparisons you have
+				#not sure how to quickly automate that for typesize
 			
 			
 		#median survival: the probability of survival after ______ is 50%

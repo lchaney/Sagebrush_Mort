@@ -94,8 +94,8 @@
 		#new bonferoni corrected p-value for significane
 		newbfp
 		
-		#median survival
-		medsurv
+	#median survival
+	medsurv
 		
 	#probability of survival at different months -- column survival gives you those times 
 	probsurv1
