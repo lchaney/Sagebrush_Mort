@@ -7,7 +7,7 @@
 #==============================================================================================#
 #CLEANING UP surv3d data
 
-	#resave type so that they appear in the following order
+	#resave type so that types appear in the following order
 	surv3d$type <- factor(surv3d$type, levels = c("T4x", "T2x", "W4x", "V2x", "V4x"))
 
 	#create a new date variable that is the same as time of death -- will recode month to a date below
@@ -18,7 +18,7 @@
 	sdat_M <- surv3d[which(surv3d$garden == "Majors"),]
 	sdat_E <- surv3d[which(surv3d$garden == "Ephraim"),]
 	
-	#save unique sample month number number dates as calendar dates
+	#save unique sample month number dates as calendar dates
 			#ORCHARD
 				sdat_O$date[sdat_O$date==60] <- "5/20/15"		
 				sdat_O$date[sdat_O$date==53] <- "10/31/14"
@@ -83,7 +83,7 @@
 #==============================================================================================#		
 #CLEANING UP climate data
 	
-	#tell R to treat the date in a format it can understand month day year to year, month, day
+	#tell R to treat the date in a format it can understand month day year to year month day
 	#transforms 1/1/10 to 2010-01-01
 	climate$Date <- as.Date(climate$Date, "%m/%d/%y")
 #==============================================================================================#
