@@ -6,14 +6,19 @@
 
 #==============================================================================================#
 #packages
+	###you will need to make sure these parackages are installed first###
 	#load needed packages
 	library(survival)
 	library(ggplot2)
-	library(GGally)
+	#library(GGally)
 	library(cowplot)
 	library(gridExtra)
 	library(scales)
-	
+
+
+#source custom ggsurv package from Edwin Thoen
+	###CHANGE DIRECTORY HERE###
+	source('~/GitHub/ggsurv/ggsurv_m_with_size_parameters.R', chdir = TRUE)
 #==============================================================================================#
 
 #==============================================================================================#
@@ -28,27 +33,27 @@
 
 		#create survivorship plot for all three gardens
 				#all three gardens
-				gar3plot <- ggsurv(sfit_garden, surv.col = "black",
-								   cens.col = "black") +
+				gar3plot <- ggsurv_m(sfit_garden, surv.col = "black",
+								   cens.col = "black", size.est=1) +
 								   scale_linetype_manual(name="Garden",
 								   		values = 2:4) +
 								   guides(color = FALSE) +
 								   xlim(0, 60) + ylim(0, 1) +
 								   theme_minimal() +
 								   theme(axis.line = element_line(color = "black", size = .25),
-								   		 legend.position = c(0.1, 0.25),
-								   		 legend.title = element_text(face = "italic"),
-								   		 legend.background = element_rect(colour = "gray"))
+								   	 legend.position = c(0.1, 0.25),
+								   	 legend.title = element_text(face = "italic"),
+								   	 legend.background = element_rect(colour = "gray"))
 
 				#ephraim
-				ephplot <- ggsurv(sfit_typeE, lty.est = 2, plot.cens = FALSE) +
+				ephplot <- ggsurv_m(sfit_typeE, lty.est = 2, plot.cens = FALSE, size.est=1) +
 								   scale_color_manual(name="Ephraim",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-								   		values = c(T4x = "red4",
-								   				   T2x = "orange1",
-								   				   W4x = "darkgreen",
-								   				   V2x = "darkblue",
-								   				   V4x = "purple4")) +
+								   		values = c(T4x = "#e31a1c",
+								   				   T2x = "#ff7f00",
+								   				   W4x = "#33a02c",
+								   				   V2x = "#1f78b4",
+								   				   V4x = "#885dbc")) +
 								   guides(linetype = FALSE) +
 								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
@@ -57,14 +62,14 @@
 								   		 legend.title = element_text(face = "italic"),
 								   		 legend.background = element_rect(colour = "gray"))
 				#Majors
-				majplot <- ggsurv(sfit_typeM, lty.est = 3, plot.cens = FALSE) +
+				majplot <- ggsurv_m(sfit_typeM, lty.est = 3, plot.cens = FALSE, size.est=1) +
 								   scale_color_manual(name="Majors",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-								   		values = c(T4x = "red4",
-								   				   T2x = "orange1",
-								   				   W4x = "darkgreen",
-								   				   V2x = "darkblue",
-								   				   V4x = "purple4")) +
+								   		values = c(T4x = "#e31a1c",
+								   				   T2x = "#ff7f00",
+								   				   W4x = "#33a02c",
+								   				   V2x = "#1f78b4",
+								   				   V4x = "#885dbc")) +
 								   guides(linetype = FALSE) +
 								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
@@ -73,7 +78,7 @@
 								   		 legend.title = element_text(face = "italic"),
 								   		 legend.background = element_rect(colour = "gray"))
 			#Orchard
-				orchplot <- ggsurv(sfit_typeO, lty.est = 4, plot.cens = FALSE) +
+				orchplot <- ggsurv_m(sfit_typeO, lty.est = 4, plot.cens = FALSE, size.est=1) +
 								   scale_color_manual(name="Orchards",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
 								   		values = c(T4x = "#e31a1c",
