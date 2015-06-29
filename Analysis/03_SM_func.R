@@ -76,11 +76,11 @@
 				orchplot <- ggsurv(sfit_typeO, lty.est = 4, plot.cens = FALSE) +
 								   scale_color_manual(name="Orchards",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-								   		values = c(T4x = "red4",
-								   				   T2x = "orange1",
-								   				   W4x = "darkgreen",
-								   				   V2x = "darkblue",
-								   				   V4x = "purple4")) +
+								   		values = c(T4x = "#e31a1c",
+								   				   T2x = "#ff7f00",
+								   				   W4x = "#33a02c",
+								   				   V2x = "#1f78b4",
+								   				   V4x = "#885dbc")) +
 								   guides(linetype = FALSE) +
 								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
