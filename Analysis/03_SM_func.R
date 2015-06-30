@@ -27,9 +27,9 @@
 
 	#fit cox ph model to use in kaplain meyer plots
 	sfit_garden <- survfit(Surv(time, death)~strata(garden), data=surv3d)
-	sfit_typeO <- survfit(Surv(time, death)~strata(type), data=sdat_O)
-	sfit_typeM <- survfit(Surv(time, death)~strata(type), data=sdat_M)
 	sfit_typeE <- survfit(Surv(time, death)~strata(type), data=sdat_E)
+	sfit_typeM <- survfit(Surv(time, death)~strata(type), data=sdat_M)
+	sfit_typeO <- survfit(Surv(time, death)~strata(type), data=sdat_O)
 
 		#create survivorship plot for all three gardens
 				#all three gardens
@@ -46,7 +46,7 @@
 								   	 legend.background = element_rect(colour = "gray"))
 
 				#ephraim
-				ephplot <- ggsurv_m(sfit_typeE, lty.est = 2, plot.cens = FALSE, size.est=1) +
+				ephplot <- ggsurv_m(sfit_typeE, lty.est = 2, plot.cens = FALSE, size.est = 1) +
 								   scale_color_manual(name="Ephraim",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
 								   		values = c(T4x = "#e31a1c",
@@ -62,7 +62,7 @@
 								   		 legend.title = element_text(face = "italic"),
 								   		 legend.background = element_rect(colour = "gray"))
 				#Majors
-				majplot <- ggsurv_m(sfit_typeM, lty.est = 3, plot.cens = FALSE, size.est=1) +
+				majplot <- ggsurv_m(sfit_typeM, lty.est = 3, plot.cens = FALSE, size.est = 1) +
 								   scale_color_manual(name="Majors",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
 								   		values = c(T4x = "#e31a1c",
@@ -78,7 +78,7 @@
 								   		 legend.title = element_text(face = "italic"),
 								   		 legend.background = element_rect(colour = "gray"))
 			#Orchard
-				orchplot <- ggsurv_m(sfit_typeO, lty.est = 4, plot.cens = FALSE, size.est=1) +
+				orchplot <- ggsurv_m(sfit_typeO, lty.est = 4, plot.cens = FALSE, size.est = 1) +
 								   scale_color_manual(name="Orchards",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
 								   		values = c(T4x = "#e31a1c",
@@ -178,7 +178,6 @@
 #==============================================================================================#
 
 
-
 #==============================================================================================#
 #ephraim survival data
 
@@ -196,38 +195,62 @@
 			######   AIC  =2logL+ 2p were p = 2
 		
 	#fit lognormal survival regression		
-		sx <- survreg(Surv(time, death)~type, data=svd, dist="lognormal")
-		s_sx <- summary(sx)
-		
-#NEED TO UPDATE THIS!!!
-		
+		ephsurvlogn <- survreg(Surv(time, death)~type, data=svd, dist="lognormal")
+		summary_ephsurvlogn <- summary(sx)
+			
 	#Kaplien Meyer plot with survival regression curve generated
-				fitcph_type <- coxph(Surv(time, death)~strata(type), data=svd)
-				plot(survfit(fitcph_type), col = 1:5)
-				legend(1, 0.3, 
-				       legend = levels(svd$type), 
-				       lty = 1, 
-				       col = 1:5,
-				       title = "Survivorship by type")
-		    sl <- survreg(Surv(time, death)~type, data=svd, dist="lognormal")
-    
-			    lines(predict(sl, newdata=list(type="T4x"),
-			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=1, lty=4)
+
+		#specify colors for each type
+			typecolors <- c(T4x = "#e31a1c",
+		   				    T2x = "#ff7f00",
+		   				    W4x = "#33a02c",
+		   				    V2x = "#1f78b4",
+		   				    V4x = "#885dbc")
+
+				ephsurvplot_lognorm <- ggsurv_m(sfit_typeE, 
+									 lty.est = 1, 
+									 plot.cens = TRUE, 
+									 cens.col = typecolors, 
+									 size.est = 1, 
+									 size.cens = 8,
+									 cens.shape = 43) +
+								   scale_color_manual(name="Type",
+								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
+								   		values = c(T4x = "#e31a1c",
+								   				   T2x = "#ff7f00",
+								   				   W4x = "#33a02c",
+								   				   V2x = "#1f78b4",
+								   				   V4x = "#885dbc")) +
+								   guides(linetype = FALSE) +
+								   xlim(0, 60) + ylim(0, 1) + 
+								   theme_minimal() +
+								   theme(axis.line = element_line(color = "black", size = .25),
+								   		 legend.title = element_text(face = "italic")) +
+								   			stat_smooth(method=lm, se=TRUE, linetype=4)
+
+#NEED TO UPDATE THIS!!!
+		    ephsurvlogn <- survreg(Surv(time, death)~type, data=svd, dist="lognormal")
+    			
+    			pct <- seq(.01,.99,by=.01)
+			    
+			    lines(predict(sl, newdata = list(type = "T4x"),
+			    	  type = "quantile", p = pct), 1-pct, col="#e31a1c", lty=4)
 			    
 			    lines(predict(sl, newdata=list(type="T2x"),
-			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=2, lty=4)
+			    	  type = "quantile", p = pct), 1-pct, col="#ff7f00", lty=4)
 			    
 			    lines(predict(sl, newdata=list(type="W4x"),
-			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=3, lty=4)
+			    	  type = "quantile", p = pct), 1-pct, col="#33a02c", lty=4)
 			    
 			    lines(predict(sl, newdata=list(type="V2x"),
-			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=4, lty=4)
+			    	  type = "quantile", p = pct), 1-pct, col="#1f78b4", lty=4)
 			    
 			    lines(predict(sl, newdata=list(type="V4x"),
-			    	  type="quantile",p=seq(.01,.99,by=.01)),seq(.99,.01,by=-.01),col=5, lty=4)
+			    	  type = "quantile", p = pct), 1-pct, col="#885dbc", lty=4)
 			
-			#http://stackoverflow.com/questions/9151591/how-to-plot-the-survival-curve-generated-by-survreg-package-survival-of-r
-			
+		#http://stackoverflow.com/questions/9151591/how-to-plot-the-survival-curve-generated-by-survreg-package-survival-of-r
+	
+				
 		#Use a log rank test to see if there is a difference in survival by TYPE
 		svdlrtest <- survdiff(formula = Surv(time, death) ~ type, data = svd)
 		

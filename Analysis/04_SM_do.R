@@ -74,10 +74,10 @@
 #Ephraim survival data
 
 	#print survival regression (Table 2)
-	s_sx
+	summary_ephsurvlogn
 	
 	#print kaplien meyer plot with survival regression curves (Figure 1)
-	
+	ephsurvplot_lognorm
 	
 	#save above plot to figures folder
 	#fig1
