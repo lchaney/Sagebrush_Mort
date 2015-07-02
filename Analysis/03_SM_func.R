@@ -14,7 +14,8 @@
 	library(cowplot)
 	library(gridExtra)
 	library(scales)
-	library(lme4)
+	library(lme4) #used for linear mixed models
+	library(lmerTest) #calculate p values for fixed and random effects from lmer
 	library(plyr) #used for function rbind.fill in VIF step
 
 #source custom ggsurv package from Edwin Thoen
@@ -307,4 +308,76 @@
 #==============================================================================================#
 #ephraim survival data with climate
 
+
+#===========================================================================================
+
+##USING STEPWISE REMOVAL BASED ON VIC (CODE FROM http://jonlefcheck.net/2012/12/28/dealing-with-multicollinearity-using-variance-inflation-factors/)
+
+####################################################################################
+####################################################################################
+
+library(plyr)
+
+
+modmer <- lmer(timedeath ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + (1|type) + (1|type:pop), data= svd)
+#needed to remove mtwm due to linear combinations
+#removed using findLinearCombos {caret}
+
+ vif.mer <- function (fit) {
+    ## adapted from rms::vif
+
+    v <- vcov(fit)
+    nam <- names(fixef(fit))
+
+    ## exclude intercepts
+    ns <- sum(1 * (nam == "Intercept" | nam == "(Intercept)"))
+    if (ns > 0) {
+        v <- v[-(1:ns), -(1:ns), drop = FALSE]
+        nam <- nam[-(1:ns)]
+    }
+
+    d <- diag(v)^0.5
+    v <- diag(solve(v/(d %o% d)))
+    names(v) <- nam
+    v
+}
+
+cutoff <- 2
+
+flag = TRUE
+viftable = data.frame()
+while(flag==TRUE){
+	vfit=vif.mer(modmer)
+	viftable=rbind.fill(viftable, as.data.frame(t(vfit)))
+	if(max(vfit)>cutoff) { modmer=
+		update(modmer, as.formula(paste(".", "~", ".", "-", names(which.max(vfit)))))}
+	else {flag=FALSE}
+}
+
+print(viftable)
+print(vfit)
+print(modmer)
+
+#sdimindd0
+#tdiff
+#smrpb
+#winp
+#sdimtcm
+#dd0map
+
+modlm <- lmer(timedeath ~ sdimindd0 + tdiff + smrpb + winp + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+
+#remove smrpb
+modlm2 <- lmer(timedeath ~ sdimindd0 + tdiff + winp + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+
+#remove winp
+modlm3 <- lmer(timedeath ~ sdimindd0 + tdiff + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+
+#remove tdiff
+modlm4 <- lmer(timedeath ~ sdimindd0 + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+
+#remove dd0map
+modlm5 <- lmer(timedeath ~ sdimindd0 + sdimtcm + (1|type) + (1|type:pop), data= svd)
+rand(modlm5)
+anova(modlm5)
 
