@@ -93,7 +93,7 @@
 #CLEANING UP survd data
 
 	#add derived climate variables
-		svd <- with(survd, data.frame(
+		svdat <- with(survd, data.frame(
 	     sample,
 	     pop,
 	     garden,

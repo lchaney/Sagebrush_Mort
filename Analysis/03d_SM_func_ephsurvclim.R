@@ -22,7 +22,7 @@
 library(plyr)
 
 
-modmer <- lmer(timedeath ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + (1|type) + (1|type:pop), data= svd)
+modmer <- lmer(timedeath ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + (1|type) + (1|type:pop), data= svdat)
 #needed to remove mtwm due to linear combinations
 #removed using findLinearCombos {caret}
 
@@ -68,19 +68,19 @@ print(modmer)
 #sdimtcm
 #dd0map
 
-modlm <- lmer(timedeath ~ sdimindd0 + tdiff + smrpb + winp + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+modlm <- lmer(timedeath ~ sdimindd0 + tdiff + smrpb + winp + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svdat)
 
 #remove smrpb
-modlm2 <- lmer(timedeath ~ sdimindd0 + tdiff + winp + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+modlm2 <- lmer(timedeath ~ sdimindd0 + tdiff + winp + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svdat)
 
 #remove winp
-modlm3 <- lmer(timedeath ~ sdimindd0 + tdiff + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+modlm3 <- lmer(timedeath ~ sdimindd0 + tdiff + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svdat)
 
 #remove tdiff
-modlm4 <- lmer(timedeath ~ sdimindd0 + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svd)
+modlm4 <- lmer(timedeath ~ sdimindd0 + sdimtcm + dd0map + (1|type) + (1|type:pop), data= svdat)
 
 #remove dd0map
-modlm5 <- lmer(timedeath ~ sdimindd0 + sdimtcm + (1|type) + (1|type:pop), data= svd)
+modlm5 <- lmer(timedeath ~ sdimindd0 + sdimtcm + (1|type) + (1|type:pop), data= svdat)
 rand(modlm5)
 anova(modlm5)
 
@@ -90,9 +90,9 @@ rsquared.glmm(modlm5)
  
 
 #can't plot well due to all the NA's
-svd1 <- na.omit(svd)
+svdat1 <- na.omit(svdat)
 ### GRAPH MODEL
-ggplot(svd1, 
+ggplot(svdat1, 
 			aes(y = fitted(modlm5), 
 				x = fitted(modlm5) + residuals(modlm5), 
 				color=factor(ssp), 
