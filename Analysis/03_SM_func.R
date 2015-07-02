@@ -10,15 +10,20 @@
 	#load needed packages
 	library(survival)
 	library(ggplot2)
-	#library(GGally)
+	library(GGally) #might not need this one if you use ggsurv_m instead
 	library(cowplot)
 	library(gridExtra)
 	library(scales)
-
+	library(lme4)
+	library(plyr) #used for function rbind.fill in VIF step
 
 #source custom ggsurv package from Edwin Thoen
 	###CHANGE DIRECTORY HERE###
-	source('~/GitHub/ggsurv/ggsurv_m_with_size_parameters.R', chdir = TRUE)
+	source('~/GitHub/ggsurv/ggsurv_m_with_size_parameters.R')
+	
+#source from GIT
+	source('~/GitHub/rsquared.glmm/rsquaredglmm.R')
+	https://raw.githubusercontent.com/jslefche/rsquared.glmm/master/rsquaredglmm.R
 #==============================================================================================#
 
 #==============================================================================================#
@@ -206,29 +211,30 @@
 		   				    W4x = "#33a02c",
 		   				    V2x = "#1f78b4",
 		   				    V4x = "#885dbc")
+				
+		#reminder from above: sfit_typeE <- survfit(Surv(time, death)~strata(type), data=sdat_E)
+		ephsurvplot_lognorm <- ggsurv_m(sfit_typeE, 
+										lty.est = 1, 
+										plot.cens = TRUE, 
+										cens.col = typecolors, 
+										size.est = 1, 
+										size.cens = 8,
+										cens.shape = 43) +
+						   	   scale_color_manual(name="Type",
+						   				breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
+						   				values = c(T4x = "#e31a1c",
+						   				   T2x = "#ff7f00",
+						   				   W4x = "#33a02c",
+						   				   V2x = "#1f78b4",
+						   				   V4x = "#885dbc")) +
+						   	   guides(linetype = FALSE) +
+						   	   xlim(0, 60) + ylim(0, 1) + 
+						   	   theme_minimal() +
+						   	   theme(axis.line = element_line(color = "black", size = .25),
+						   		 	 legend.title = element_text(face = "italic")) +
+						       stat_smooth(method=lm, se=TRUE, linetype=4)
 
-				ephsurvplot_lognorm <- ggsurv_m(sfit_typeE, 
-									 lty.est = 1, 
-									 plot.cens = TRUE, 
-									 cens.col = typecolors, 
-									 size.est = 1, 
-									 size.cens = 8,
-									 cens.shape = 43) +
-								   scale_color_manual(name="Type",
-								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-								   		values = c(T4x = "#e31a1c",
-								   				   T2x = "#ff7f00",
-								   				   W4x = "#33a02c",
-								   				   V2x = "#1f78b4",
-								   				   V4x = "#885dbc")) +
-								   guides(linetype = FALSE) +
-								   xlim(0, 60) + ylim(0, 1) + 
-								   theme_minimal() +
-								   theme(axis.line = element_line(color = "black", size = .25),
-								   		 legend.title = element_text(face = "italic")) +
-								   			stat_smooth(method=lm, se=TRUE, linetype=4)
-
-#NEED TO UPDATE THIS!!!
+	#NEED TO UPDATE THIS!!!
 		    ephsurvlogn <- survreg(Surv(time, death)~type, data=svd, dist="lognormal")
     			
     			pct <- seq(.01,.99,by=.01)
@@ -249,7 +255,9 @@
 			    	  type = "quantile", p = pct), 1-pct, col="#885dbc", lty=4)
 			
 		#http://stackoverflow.com/questions/9151591/how-to-plot-the-survival-curve-generated-by-survreg-package-survival-of-r
-	
+	#NEED TO UPDATE THIS!!!	^^^^^^^
+
+
 				
 		#Use a log rank test to see if there is a difference in survival by TYPE
 		svdlrtest <- survdiff(formula = Surv(time, death) ~ type, data = svd)
@@ -275,13 +283,11 @@
 			colnames(lrchisqtable) <- unique(svd$type)
 			
 			#and p-values for the table
-			pval_lrchisqtable <- round(pchisq(lrchisqtable, 1, lower.tail=FALSE), 5)
+			pval_lrchisqtagible <- round(pchisq(lrchisqtable, 1, lower.tail=FALSE), 5)
 			
 			#need to correct for multiple comparisons now, we will use the conservative bonferroni
-			newbfp <- (0.05 / (10))
-				#replace 10 for how many pairwise comparisons you have
-				#not sure how to quickly automate that for typesize
-			
+			newbfp <- (0.05 / (((typesize-1)*typesize)/2))
+
 			
 		#median survival: the probability of survival after ______ is 50%
 		#similar to LD50
@@ -292,4 +298,13 @@
 		probsurv1 <- summary(s_sx, times=seq(from=12, to=60, by=12))
 		probsurv2 <- summary(s_sx, times=seq(from=58, to=60, by=1))
 
-		#column survival gives the probability of survival at each of those times 
+		#column survival gives the probability of survival at each of those times
+		
+#==============================================================================================#
+
+
+
+#==============================================================================================#
+#ephraim survival data with climate
+
+
