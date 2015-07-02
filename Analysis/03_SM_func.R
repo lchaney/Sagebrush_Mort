@@ -4,6 +4,8 @@
 # This script is used for FUNCTIONS needed for the Chaney et al 2015 Sagebrush mortatlity paper
 #==============================================================================================#
 
+#=== change source file location ===#
+
 #==============================================================================================#
 #packages
 	###you will need to make sure these parackages are installed first###
