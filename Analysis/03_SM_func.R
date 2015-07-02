@@ -381,3 +381,25 @@ modlm5 <- lmer(timedeath ~ sdimindd0 + sdimtcm + (1|type) + (1|type:pop), data= 
 rand(modlm5)
 anova(modlm5)
 
+rsquared.glmm(modlm5)
+#conditional is variance explained by fixed plus random effects
+#marginal is variance explained by fixed effects
+ 
+
+#can't plot well due to all the NA's
+svd1 <- na.omit(svd)
+### GRAPH MODEL
+ggplot(svd1, 
+			aes(y = fitted(modlm5), 
+				x = fitted(modlm5) + residuals(modlm5), 
+				color=factor(ssp), 
+				shape=factor(type)
+				),
+			size=3) + 
+			ylim(min(fitted(modlm5)), max(fitted(modlm5))) + 
+			xlim(min(fitted(modlm5) + residuals(modlm5)), 
+			max(fitted(modlm5) + residuals(modlm5))) + 
+			theme_bw() + scale_shape(solid=TRUE) + 
+			stat_smooth(method=lm, se=FALSE, linetype=4) + 
+			stat_summary(fun.y = mean, fun.ymin = "sd", fun.ymax = "sd") + 
+			labs(x = "Observed", y = "Predicted", color="SubSpecies", shape="Ploidy")
