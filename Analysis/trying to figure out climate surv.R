@@ -126,19 +126,22 @@ gmod3 <- glm(death.mean ~ sdimindd0 + winp + sdimtcm + as.numeric(type), data = 
 #remove winp
 gmod4 <- glm(death.mean ~ sdimindd0 + sdimtcm + as.numeric(type), data = popsurvd, family = quasibinomial)
 
+#remove winp
+gmodt <- glm(death.mean ~ mtcmmap + as.numeric(type), data = popsurvd, family = quasibinomial)
 
+gmod <- gmodt
 
 ### GRAPH MODEL
 ggplot(popsurvd, 
-			aes(y = fitted(gmod4), 
-				x = fitted(gmod4) + residuals(gmod4), 
+			aes(y = fitted(gmod), 
+				x = fitted(gmod) + residuals(gmod), 
 				color=factor(type), 
 				shape=factor(type)
 				),
 			size=3) + 
-			ylim(min(fitted(gmod4)), max(fitted(gmod4))) + 
-			xlim(min(fitted(gmod4) + residuals(gmod4)), 
-			max(fitted(gmod4) + residuals(gmod4))) + 
+			ylim(min(fitted(gmod)), max(fitted(gmod))) + 
+			xlim(min(fitted(gmod) + residuals(gmod)), 
+			max(fitted(gmod) + residuals(gmod))) + 
 			theme_bw() + scale_shape(solid=TRUE) + 
 			stat_smooth(method=lm, se=FALSE, linetype=4) + 
 			stat_summary(fun.y = mean, fun.ymin = "sd", fun.ymax = "sd") + 
