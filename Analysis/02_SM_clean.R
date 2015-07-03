@@ -148,4 +148,4 @@
 	     dd0gsp=dd0/gsp))
 		
 		#reorder type
-		svd$type <- factor(svd$type, levels = c("T4x", "T2x", "W4x", "V2x", "V4x"))
+		svdat$type <- factor(svdat$type, levels = c("T4x", "T2x", "W4x", "V2x", "V4x"))
