@@ -91,7 +91,7 @@ ggplot(popsurvd,
 ###OPPS THAT WASN'T RIGHT -- NEED QUASIBIONOMIAL
 
 
-gmod <- glm(death.mean ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + type, data= popsurvd, family = quasibinomial)
+gmod <- glm(death.mean ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + as.numeric(type), data= popsurvd, family = quasibinomial)
 
 mod <- gmod
 
@@ -103,7 +103,7 @@ cutoff=2
 flag=TRUE
 viftable=data.frame()
 while(flag==TRUE) {
-  vfit=vif(mod)[,1]
+  vfit=vif(mod)
   viftable=rbind.fill(viftable,as.data.frame(t(vfit)))
   if(max(vfit)>cutoff) { mod=
 	update(mod,as.formula(paste(".","~",".","-",names(which.max(vfit))))) }
@@ -115,9 +115,34 @@ print(vfit)
 # And show the order in which variables were dropped
 print(viftable)
 
-gmod1 <- glm(death.mean ~ mmax + sday + sdimindd0 + tdiff + sprp + winp + smrp + sdimtcm + dd0map, family = quasibinomial, data = popsurvd)
+gmod1 <- glm(death.mean ~ fday + sdimindd0 + smrpb + winp + sdimtcm + as.numeric(type), data = popsurvd, family = quasibinomial)
+    
+#remove fday
+gmod2 <- glm(death.mean ~ sdimindd0 + smrpb + winp + sdimtcm + as.numeric(type), data = popsurvd, family = quasibinomial)
+
+#remove smrpb
+gmod3 <- glm(death.mean ~ sdimindd0 + winp + sdimtcm + as.numeric(type), data = popsurvd, family = quasibinomial)
+
+#remove winp
+gmod4 <- glm(death.mean ~ sdimindd0 + sdimtcm + as.numeric(type), data = popsurvd, family = quasibinomial)
 
 
+
+### GRAPH MODEL
+ggplot(popsurvd, 
+			aes(y = fitted(gmod4), 
+				x = fitted(gmod4) + residuals(gmod4), 
+				color=factor(type), 
+				shape=factor(type)
+				),
+			size=3) + 
+			ylim(min(fitted(gmod4)), max(fitted(gmod4))) + 
+			xlim(min(fitted(gmod4) + residuals(gmod4)), 
+			max(fitted(gmod4) + residuals(gmod4))) + 
+			theme_bw() + scale_shape(solid=TRUE) + 
+			stat_smooth(method=lm, se=FALSE, linetype=4) + 
+			stat_summary(fun.y = mean, fun.ymin = "sd", fun.ymax = "sd") + 
+			labs(x = "Observed", y = "Predicted", color="SubSpecies", shape="Ploidy")
 
 
 
