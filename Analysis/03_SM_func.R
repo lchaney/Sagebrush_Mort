@@ -22,7 +22,7 @@
 
 #source custom ggsurv package from Edwin Thoen
 	###CHANGE DIRECTORY HERE###
-	source('~/GitHub/ggsurv/ggsurv_m_with_size_parameters.R')
+	source('~/GitHub/ggsurv_m/ggsurv_m_with_size_parameters.R')
 	
 #source from GIT
 	source('~/GitHub/rsquared.glmm/rsquaredglmm.R')
