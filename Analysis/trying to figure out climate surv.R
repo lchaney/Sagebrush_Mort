@@ -126,7 +126,7 @@ gmod3 <- glm(death.mean ~ sdimindd0 + winp + sdimtcm + as.numeric(type), data = 
 #remove winp
 gmod4 <- glm(death.mean ~ sdimindd0 + sdimtcm + as.numeric(type), data = popsurvd, family = quasibinomial)
 
-#remove winp
+#Playing around
 gmodt <- glm(death.mean ~ mtcmmap + as.numeric(type), data = popsurvd, family = quasibinomial)
 
 gmod <- gmodt
@@ -146,6 +146,38 @@ ggplot(popsurvd,
 			stat_smooth(method=lm, se=FALSE, linetype=4) + 
 			stat_summary(fun.y = mean, fun.ymin = "sd", fun.ymax = "sd") + 
 			labs(x = "Observed", y = "Predicted", color="SubSpecies", shape="Ploidy")
+
+gmodt <- glm(death.mean ~ mtcmgsp + sprp + as.numeric(type), data = popsurvd, family = quasibinomial)
+
+gmodt <- glm(death.mean ~ gspmtcm + dd5 + as.numeric(type), data = popsurvd, family = quasibinomial)
+
+gmodt <- glm(death.mean ~ mtcm + d100 + fday + gsp + sprp + as.numeric(type), data = popsurvd, family = quasibinomial)
+gmodt <- glm(death.mean ~ mtcm + fday + gsp + sprp + as.numeric(type), data = popsurvd, family = quasibinomial)
+gmodt <- glm(death.mean ~ mtcm + fday + sprp + as.numeric(type), data = popsurvd, family = quasibinomial)
+gmodt <- glm(death.mean ~ mtcm + fday + as.numeric(type), data = popsurvd, family = quasibinomial)
+gmodt <- glm(death.mean ~ mtcm + as.numeric(type), data = popsurvd, family = quasibinomial)
+
+
+
+library(MASS)
+gmodd <- glm(death.mean ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + as.numeric(type), data= popsurvd, family = binomial)
+
+gmodst <- stepAIC(gmodd, TRACE=FALSE)
+gmodst$anova
+
+
+
+
+
+
+
+#population level data
+	popsvd2 <- read.csv("~/Desktop/prop.csv")
+
+	proppop <- merge(popsvd2, popsurvd, by="pop", all=TRUE)
+	
+	proppop$y <- cbind(proppop$noSurv, proppop$noDead)
+	
 
 
 
