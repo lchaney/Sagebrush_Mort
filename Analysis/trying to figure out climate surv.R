@@ -93,11 +93,12 @@ ggplot(popsurvd,
 
 gmod <- glm(death.mean ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + as.numeric(type), data= popsurvd, family = quasibinomial)
 
+library(car)
 mod <- gmod
 
 # Choose a VIF cutoff under which a variable is retained (Zuur et al. 2010 
 # MEE recommends 2)
-cutoff=2
+cutoff=8
 # Create function to sequentially drop the variable with the largest VIF until 
 # all variables have VIF > cutoff
 flag=TRUE
@@ -177,7 +178,15 @@ gmodst$anova
 	proppop <- merge(popsvd2, popsurvd, by="pop", all=TRUE)
 	
 	proppop$y <- cbind(proppop$noSurv, proppop$noDead)
+
+
 	
+	modglm <- glm(y ~ gspmtcm + type, data=proppop, family="quasibinomial")
+	anova(modglm, test="Chi")
+	anova(modglm)
+
+
+modfullq <- glm(formula = y ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + + type, family = "quasibinomial", data = proppop)
 
 
 
