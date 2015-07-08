@@ -401,6 +401,20 @@ fitmodta <- glm(cbind(noSurv, noDead) ~ tdiff + mmax, data = proppop[which(propp
 anova(fitmodta, test="F")
 
 
+models3t <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + gspmtcm, list(i = as.name(x))), data = proppop[which(proppop$type == "T4x" | proppop$type == "T2x"),], family=quasibinomial)
+})
+
+sorter.r(models3t)
+
+# 25      sday + gspmtcm 0.7839931
+# 7        ffp + gspmtcm 0.7792211
+# 6       fday + gspmtcm 0.7560689
+
+fitmodtb <- glm(cbind(noSurv, noDead) ~ sday + gspmtcm, data = proppop[which(proppop$type == "T4x" | proppop$type == "T2x"),], family=quasibinomial)
+
+anova(fitmodtb, test="F")
+
 #~~~~~by ssp~~~~~#
 models1w <- lapply(climvars, function(x) {
     glm(substitute(cbind(noSurv, noDead) ~ i, list(i = as.name(x))), data = proppop[which(proppop$type == "W4x"),], family=quasibinomial)
@@ -451,3 +465,10 @@ sorter.r(models2v)
 
 fitmodva <- glm(cbind(noSurv, noDead) ~ smrpb + mtcm, data = proppop[which(proppop$type == "V4x" | proppop$type == "V2x"),], family=quasibinomial)
 anova(fitmodva, test="F")
+
+
+models3v <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + mtcm + smrpb, list(i = as.name(x))), data = proppop[which(proppop$type == "V4x" | proppop$type == "V2x"),], family=quasibinomial)
+})
+
+sorter.r(models3v)
