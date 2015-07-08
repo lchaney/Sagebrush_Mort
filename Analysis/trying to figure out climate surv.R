@@ -375,3 +375,79 @@ fitmodc <- glm(cbind(noSurv, noDead) ~ gsdd5 + mapmtcm + type, data = proppop, f
 anova(fitmoda, test="F")
 anova(fitmodb, test="F")
 anova(fitmodc, test="F")
+
+#~~~~~by ssp~~~~~#
+models1t <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i, list(i = as.name(x))), data = proppop[which(proppop$type == "T4x" | proppop$type == "T2x"),], family=quasibinomial)
+})
+
+sorter.r(models1t)
+
+#29     tdiff 6.126605e-01
+#12   gspmtcm 4.735936e-01
+
+models2t <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + tdiff, list(i = as.name(x))), data = proppop[which(proppop$type == "T4x" | proppop$type == "T2x"),], family=quasibinomial)
+})
+
+sorter.r(models2t)
+
+#20      mmax + tdiff 0.6705704
+#27 sdimindd0 + tdiff 0.6612518
+#25      sday + tdiff 0.6564609
+
+fitmodta <- glm(cbind(noSurv, noDead) ~ tdiff + mmax, data = proppop[which(proppop$type == "T4x" | proppop$type == "T2x"),], family=quasibinomial)
+
+anova(fitmodta, test="F")
+
+
+#~~~~~by ssp~~~~~#
+models1w <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i, list(i = as.name(x))), data = proppop[which(proppop$type == "W4x"),], family=quasibinomial)
+})
+
+sorter.r(models1w)
+
+#12   gspmtcm 0.652158542
+#16   mapmtcm 0.637795471
+
+models2w <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + gspmtcm, list(i = as.name(x))), data = proppop[which(proppop$type == "W4x"),], family=quasibinomial)
+})
+
+sorter.r(models2w)
+
+#27 sdimindd0 + gspmtcm 0.7909887
+#32      sprp + gspmtcm 0.7359787
+#10    pratio + gspmtcm 0.6955089
+
+fitmodwa <- glm(cbind(noSurv, noDead) ~ sdimindd0 + gspmtcm, data = proppop[which(proppop$type == "W4x"),], family=quasibinomial)
+anova(fitmodwa, test="F")
+
+#~~~~~by ssp~~~~~#
+models1v <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i, list(i = as.name(x))), data = proppop[which(proppop$type == "V4x" | proppop$type == "V2x"),], family=quasibinomial)
+})
+
+sorter.r(models1v)
+
+# 22      mtcm 0.755166628
+# 16   mapmtcm 0.688280946
+# 24   mtcmmap 0.660982043
+# 4        dd0 0.600535585
+# 23   mtcmgsp 0.599445926
+# 12   gspmtcm 0.559553619
+
+models2v <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + mtcm, list(i = as.name(x))), data = proppop[which(proppop$type == "V4x" | proppop$type == "V2x"),], family=quasibinomial)
+})
+
+sorter.r(models2v)
+
+# 31     smrpb + mtcm 0.8096717
+# 34      smrp + mtcm 0.7877038
+# 20      mmax + mtcm 0.7853647
+# 21      mmin + mtcm 0.7831599
+
+fitmodva <- glm(cbind(noSurv, noDead) ~ smrpb + mtcm, data = proppop[which(proppop$type == "V4x" | proppop$type == "V2x"),], family=quasibinomial)
+anova(fitmodva, test="F")
