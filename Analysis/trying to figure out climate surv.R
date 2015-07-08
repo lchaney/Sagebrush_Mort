@@ -104,7 +104,7 @@ cutoff=8
 flag=TRUE
 viftable=data.frame()
 while(flag==TRUE) {
-  vfit=vif(mod)
+  vfit=vif(mod)[,1] #GLM needs the column specified, LM doesn't
   viftable=rbind.fill(viftable,as.data.frame(t(vfit)))
   if(max(vfit)>cutoff) { mod=
 	update(mod,as.formula(paste(".","~",".","-",names(which.max(vfit))))) }
@@ -168,9 +168,35 @@ gmodst$anova
 
 
 
+#calculate GLM R squared value
+glmrsq <- function( model, ... ){
+		(1-exp((model$dev - model$null)/model$df.null)) / (1-exp(-model$null/model$df.null))
+			}
+
+#check for overdispersion			
+sum( residuals(mod3, type="pearson")^2)/mod3$df.residual			
+
+glmrsq2.pretty <- function( model, ... ){
+
+pred.var <- names(model$coef)[[2]]
+rsq<-(1-exp((model$dev - model$null)/model$df.null)) / (1-exp(-model$null/model$df.null))
+
+cat( "R^2: ", rsq, "\n")
+cat( "Predictor: ", pred.var, "\n")
+}
+
+glmrsq2.pretty(mod1) # output not extractable
 
 
+ # Can us this output to extract/call values/names later
+glmrsq2 <- function( model, ... ){
 
+print(names(model$coef)[[2]])
+(1-exp((model$dev - model$null)/model$df.null)) / (1-exp(-model$null/model$df.null))
+
+}
+
+glmrsq2(mod1)
 
 #population level data
 	popsvd2 <- read.csv("~/Desktop/prop.csv")
@@ -186,9 +212,112 @@ gmodst$anova
 	anova(modglm)
 
 
-modfullq <- glm(formula = y ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + + type, family = "quasibinomial", data = proppop)
+modfullq <- glm(formula = y ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + ffp + gsdd5 + gsp + pratio + gspdd5 + gspmtcm + gsptd + map + mapdd5 + mapmtcm + maptd + mat + mmindd0 + mmax + mmin + mtcm + mtcmgsp + mtcmmap + sday + sdi + sdimindd0 + tdgsp + tdiff + tdmap + smrpb + sprp + winp + smrp + sdimtcm + dd0map + dd0gsp + type, family = "quasibinomial", data = proppop)
+
+#run VIF
+library(car)
+mod <- modfullq
+
+# Choose a VIF cutoff under which a variable is retained (Zuur et al. 2010 
+# MEE recommends 2)
+cutoff=2
+# Create function to sequentially drop the variable with the largest VIF until 
+# all variables have VIF > cutoff
+flag=TRUE
+viftable=data.frame()
+while(flag==TRUE) {
+  vfit=vif(mod)[,1] #GLM needs the column specified, LM doesn't
+  viftable=rbind.fill(viftable,as.data.frame(t(vfit)))
+  if(max(vfit)>cutoff) { mod=
+	update(mod,as.formula(paste(".","~",".","-",names(which.max(vfit))))) }
+  else { flag=FALSE } }
+# Look at the final model
+print(mod)
+# And associated VIFs
+print(vfit)
+# And show the order in which variables were dropped
+print(viftable)
+
+
+#reduced from VIF model
+modqvred <- glm(formula = y ~ mmax + sday + sdimindd0 + tdiff + sprp + winp + 
+    smrp + sdimtcm + dd0map + type, family = "quasibinomial", data = proppop)
+
+#remove sdimindd0
+modqvred1 <- glm(formula = y ~ mmax + sday + tdiff + sprp + winp + 
+    smrp + sdimtcm + dd0map + type, family = "quasibinomial", data = proppop)
+
+#remove mmax
+modqvred2 <- glm(formula = y ~ sday + tdiff + sprp + winp + 
+    smrp + sdimtcm + dd0map + type, family = "quasibinomial", data = proppop)
+
+#remove tdiff
+modqvred3 <- glm(formula = y ~ sday + sprp + winp + 
+    smrp + sdimtcm + dd0map + type, family = "quasibinomial", data = proppop)
+
+#remove winp
+modqvred4 <- glm(formula = y ~ sday + sprp + smrp + sdimtcm + dd0map + type, family = "quasibinomial", data = proppop)
+
+#remove smrp
+modqvred5 <- glm(formula = y ~ sday + sprp + sdimtcm + dd0map + type, family = "quasibinomial", data = proppop)
+
+#remove dd0map
+modqvred6 <- glm(formula = y ~ sday + sprp + sdimtcm + type, family = "quasibinomial", data = proppop)
+
+#remove sday
+modqvred7 <- glm(formula = y ~ sprp + sdimtcm + type, family = "quasibinomial", data = proppop)
+
+
+#create a function to find the best fit according to r squared value
+#TEST DATA
+modvars<- names(mammalsleep[,c(1:2, 6:9)])
+
+models <- lapply(modvars, function(x) {
+    glm(substitute(cbind(dream, nondream) ~ i + danger, list(i = as.name(x))), data = mammalsleep, family=quasibinomial)
+})
+
+lapply(models, glmrsq2.pretty)
+
+#####END TEST DATA######
 
 
 
-#create a function to find the best fit according to conditional r squared value
-bestfit <- lmer(timedeath ~ var1 + var)
+#my data
+climvars <- names((proppop)[,c("adi", "adimindd0", "d100", "dd0", "dd5", "fday", "ffp", "gsdd5", "gsp", "pratio", "gspdd5", "gspmtcm", "gsptd", "map", "mapdd5", "mapmtcm", "maptd", "mat", "mmindd0", "mmax", "mmin",      "mtcm", "mtcmgsp", "mtcmmap", "sday", "sdi", "sdimindd0", "tdgsp", "tdiff", "tdmap", "smrpb", "sprp", "winp", "smrp", "sdimtcm", "dd0map", "dd0gsp")])
+
+models <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + type, list(i = as.name(x))), data = proppop, family=quasibinomial)
+})
+
+resul1var <- lapply(models, glmrsq2.pretty)
+
+
+R^2:  0.7042838 
+Predictor:  gspmtcm 
+
+R^2:  0.7063801 
+Predictor:  mapmtcm 
+
+
+models2 <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + mapmtcm + type, list(i = as.name(x))), data = proppop, family=quasibinomial)
+})
+
+resul1var2 <- lapply(models2, glmrsq2)
+
+R^2:  0.7877982 
+Predictor:  sday 
+
+models3 <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + gspmtcm + type, list(i = as.name(x))), data = proppop, family=quasibinomial)
+})
+
+resul1var3 <- lapply(models3, glmrsq2)
+
+R^2:  0.7611406 
+Predictor:  sday
+
+
+
+fitmodel <- glm(cbind(noSurv, noDead) ~ sday + gspmtcm + type, data = proppop, family=quasibinomial)
+
