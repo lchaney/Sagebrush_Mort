@@ -33,6 +33,21 @@
 		   				    W4x = "#33a02c",
 		   				    V2x = "#1f78b4",
 		   				    V4x = "#885dbc")
+
+		#pull the predicted line from the survival regression
+			#set quantile levels
+			pct <- seq(.01,.99,by=.01)
+			
+			predict_dat <- data.frame(surv_prop = c(1-pct,1-pct,1-pct,1-pct,1-pct),
+                           time = c(predict(ephsurvlogn, newdata=list(type = "T4x"), type="quantile", p=pct),
+                                   predict(ephsurvlogn, newdata=list(type = "T2x"), type="quantile", p=pct),
+                                   predict(ephsurvlogn, newdata=list(type = "W4x"), type="quantile", p=pct),
+                                   predict(ephsurvlogn, newdata=list(type = "V2x"), type="quantile", p=pct),
+                                   predict(ephsurvlogn, newdata=list(type = "V4x"), type="quantile", p=pct)),
+                           group = factor(rep(1:5, each = 99)))
+                           
+            	max_time <- max(svdat$time)
+				predict_dat <- predict_dat[predict_dat$time <= max_time ,]
 				
 		#reminder from above: sfit_typeE <- survfit(Surv(time, death)~strata(type), data=sdat_E)
 		ephsurvplot_lognorm <- ggsurv_m(sfit_typeE, 
@@ -42,7 +57,8 @@
 										size.est = 1, 
 										size.cens = 8,
 										cens.shape = 43) +
-						   	   scale_color_manual(name="Type",
+						   	    geom_line(data = predict_dat, aes(x = time, y = surv_prop), linetype="dotdash") +
+						   	    scale_color_manual(name="Type",
 						   				breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
 						   				values = c(T4x = "#e31a1c",
 						   				   T2x = "#ff7f00",
@@ -53,31 +69,10 @@
 						   	   xlim(0, 60) + ylim(0, 1) + 
 						   	   theme_minimal() +
 						   	   theme(axis.line = element_line(color = "black", size = .25),
-						   		 	 legend.title = element_text(face = "italic")) +
-						       stat_smooth(method=lm, se=TRUE, linetype=4)
-
-	#NEED TO UPDATE THIS!!!
-		    ephsurvlogn <- survreg(Surv(time, death)~type, data=svdat, dist="lognormal")
-    			
-    			pct <- seq(.01,.99,by=.01)
-			    
-			    lines(predict(sl, newdata = list(type = "T4x"),
-			    	  type = "quantile", p = pct), 1-pct, col="#e31a1c", lty=4)
-			    
-			    lines(predict(sl, newdata=list(type="T2x"),
-			    	  type = "quantile", p = pct), 1-pct, col="#ff7f00", lty=4)
-			    
-			    lines(predict(sl, newdata=list(type="W4x"),
-			    	  type = "quantile", p = pct), 1-pct, col="#33a02c", lty=4)
-			    
-			    lines(predict(sl, newdata=list(type="V2x"),
-			    	  type = "quantile", p = pct), 1-pct, col="#1f78b4", lty=4)
-			    
-			    lines(predict(sl, newdata=list(type="V4x"),
-			    	  type = "quantile", p = pct), 1-pct, col="#885dbc", lty=4)
-			
+						   		 	 legend.title = element_text(face = "italic"))
+						      
 		#http://stackoverflow.com/questions/9151591/how-to-plot-the-survival-curve-generated-by-survreg-package-survival-of-r
-	#NEED TO UPDATE THIS!!!	^^^^^^^
+	#Thank you to Edward Theoin for ggsurv help
 
 
 				
