@@ -321,3 +321,57 @@ Predictor:  sday
 
 fitmodel <- glm(cbind(noSurv, noDead) ~ sday + gspmtcm + type, data = proppop, family=quasibinomial)
 
+
+
+
+#################
+#################
+# Gives Rsq + all predictor variables used.
+glmrsq2 <- function( model, ... ){
+
+cbind( deparse(model$formula[[3]]), (1-exp((model$dev - model$null)/model$df.null)) / (1-exp(-model$null/model$df.null)))
+
+}
+
+
+# Function for Sorting & ordering the output
+sorter.r <- function( models, ... ) {
+glmrsq2.results <- data.frame(do.call(rbind, lapply(models,  glmrsq2)))
+glmrsq2.results[,2] <- as.numeric(as.character(glmrsq2.results[,2]))
+glmrsq2.results[ order(glmrsq2.results[,2], decreasing=TRUE), ]
+}
+
+
+
+#################
+#################
+
+climvars <- names((proppop)[,c("adi", "adimindd0", "d100", "dd0", "dd5", "fday", "ffp", "gsdd5", "gsp", "pratio", "gspdd5", "gspmtcm", "gsptd", "map", "mapdd5", "mapmtcm", "maptd", "mat", "mmindd0", "mmax", "mmin",      "mtcm", "mtcmgsp", "mtcmmap", "sday", "sdi", "sdimindd0", "tdgsp", "tdiff", "tdmap", "smrpb", "sprp", "winp", "smrp", "sdimtcm", "dd0map", "dd0gsp")])
+
+models1 <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + type, list(i = as.name(x))), data = proppop, family=quasibinomial)
+})
+
+sorter.r(models1)
+
+#16   mapmtcm + type 0.7063801
+#12   gspmtcm + type 0.7042838
+
+models2 <- lapply(climvars, function(x) {
+    glm(substitute(cbind(noSurv, noDead) ~ i + mapmtcm + type, list(i = as.name(x))), data = proppop, family=quasibinomial)
+})
+
+sorter.r(models2)
+
+#25      sday + mapmtcm + type 0.7877982
+#7        ffp + mapmtcm + type 0.7792186
+#8      gsdd5 + mapmtcm + type 0.7720290
+
+
+fitmoda <- glm(cbind(noSurv, noDead) ~ sday + mapmtcm + type, data = proppop, family=quasibinomial)
+fitmodb <- glm(cbind(noSurv, noDead) ~ ffp + mapmtcm + type, data = proppop, family=quasibinomial)
+fitmodc <- glm(cbind(noSurv, noDead) ~ gsdd5 + mapmtcm + type, data = proppop, family=quasibinomial)
+
+anova(fitmoda, test="F")
+anova(fitmodb, test="F")
+anova(fitmodc, test="F")
