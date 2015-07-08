@@ -118,8 +118,3 @@
 		#column survival gives the probability of survival at each of those times
 		
 #==============================================================================================#
-
-#mean survival using survival function vs using raw data
-#the arithmetic mean underestimates the age at death, and when the censoring is substantial 
-tapply(predict(ephsurvlogn, type="response"), svdat$type, mean)
-tapply(svdat$timedeath, svdat$type, mean, na.rm=TRUE)
