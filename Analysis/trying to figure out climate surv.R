@@ -425,6 +425,10 @@ sorter.r(models1w)
 #12   gspmtcm 0.652158542
 #16   mapmtcm 0.637795471
 
+fitmodwb <- glm(cbind(noSurv, noDead) ~ gspmtcm, data = proppop[which(proppop$type == "W4x"),], family=quasibinomial)
+anova(fitmodwb, test="F")
+
+
 models2w <- lapply(climvars, function(x) {
     glm(substitute(cbind(noSurv, noDead) ~ i + gspmtcm, list(i = as.name(x))), data = proppop[which(proppop$type == "W4x"),], family=quasibinomial)
 })
