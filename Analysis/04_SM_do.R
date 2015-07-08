@@ -10,19 +10,16 @@
 # Set working directory and source LOAD, CLEAN, and FUNCTION scripts
 
 	#set working directory -- change this to where you have files saved to
-		setwd("~/Documents/Sagebrush")
+		setwd("~/Documents/Sagebrush/")
 	
 	#source to LOAD data
-#		source("01_SM_load.R")
-		source('~/GitHub/Sagebrush_Mort/Analysis/01_SM_load.R')
+		source('Analysis/01_SM_load.R')
 	
 	#source to CLEAN data
-#		source("02_SM_clean.R")
-		source('~/GitHub/Sagebrush_Mort/Analysis/02_SM_clean.R')
+		source('Analysis/02_SM_clean.R')
 	
 	#source to perform FUNCTION on data
-#		source("03_SM_func.R")
-		source('~/GitHub/Sagebrush_Mort/Analysis/03_SM_func.R')
+		source('Analysis/03_SM_func.R')
 #==============================================================================================#
 
 

@@ -8,7 +8,7 @@
 
 #this data set has survival (last data collection in May 2015) for all three gardens
 
-	surv3d <- read.csv("~/Documents/Sagebrush/Data/3gardsurv_2015.csv")
+	surv3d <- read.csv("Data/3gardsurv_2015.csv")
 
 
 
@@ -18,11 +18,11 @@
 #Orchards data accessed here: http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=674&state=id
 #Majors data collected for data logger temperature probe
 
-	climate <- read.csv("~/Documents/Sagebrush/Data/daily_temps3.csv")
+	climate <- read.csv("Data/daily_temps3.csv")
 
 		#note that moving averages were calculated then copied into excel 
 		#(due to missing values, I couldn't figure out how match them up in R)
 		
 		
 #this data set is just Ephraim survival with Provenance climate data (i.e., seed source population climate)
-	survd <- read.csv("~/Documents/Sagebrush/Data/surv2.csv")
+	survd <- read.csv("Data/surv2.csv")
