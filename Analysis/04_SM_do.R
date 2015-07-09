@@ -13,13 +13,16 @@
 		setwd("~/Documents/Sagebrush/")
 	
 	#source to LOAD data
-		source('Analysis/01_SM_load.R')
-	
+#		source('Analysis/01_SM_load.R')
+		source('~/GitHub/Sagebrush_Mort/Analysis/01_SM_load.R')	
+		
 	#source to CLEAN data
-		source('Analysis/02_SM_clean.R')
+#		source('Analysis/02_SM_clean.R')
+		source('~/GitHub/Sagebrush_Mort/Analysis/02_SM_clean.R')
 	
 	#source to perform FUNCTION on data
-		source('Analysis/03_SM_func.R')
+#		source('Analysis/03_SM_func.R')
+		source('~/GitHub/Sagebrush_Mort/Analysis/03_SM_func.R')
 #==============================================================================================#
 
 
