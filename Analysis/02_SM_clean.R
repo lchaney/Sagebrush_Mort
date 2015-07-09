@@ -174,6 +174,8 @@
 
 	####### OR #######
 
+#is there a way to do this as a function so as not to clutter the workspace?
+
 		popdeath <- aggregate(death ~ pop + type, sum, data=svdat) #sum will give you number dead
 		poptotal <- aggregate(death ~ pop + type, length, data=svdat) #length will give total number
 				names(poptotal) <- c("pop", "type", "total") #rename to meaningful terms (death is really total)
