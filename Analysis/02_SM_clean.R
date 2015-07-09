@@ -149,3 +149,21 @@
 		
 		#reorder type
 		svdat$type <- factor(svdat$type, levels = c("T4x", "T2x", "W4x", "V2x", "V4x"))
+		
+		
+	#aggregate population level data with counts of survival and dead
+		popdeath <- aggregate(death ~ pop, sum, data=svdat)
+		poptotal <- aggregate(death ~ pop, length, data=svdat)
+			poptotal$total <- poptotal$death
+			popst <- cbind(popdeath, poptotal$total)
+			names(popst) <- c("pop", "noDead", "total") 
+			popst$noSurv <- popst$total - popst$noDead 
+			popst$propDead <- popst$noDead / popst$total
+										
+		popa <- aggregate(. ~ pop, mean, data=svdat[,-c(1, 3:5, 7:9)])
+			popa$type <- as.integer(popa$type)
+			popa$type <- as.factor(popa$type)
+			levels(popa$type) <-  c("T4x", "T2x", "W4x", "V2x", "V4x")
+
+		popdat <- merge(popst, popa, by="pop", all=TRUE)
+		
