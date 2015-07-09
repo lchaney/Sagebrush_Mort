@@ -55,12 +55,7 @@
 			deathclim <- arrangeGrob(clim_graph, death2, ncol=1, heights=c(4, 0.9))
 
 
-	#compare temperatures by garden
-	EphClim <- summaryBy(. ~ Year, data=climate[,c(1, 4:5)], FUN=c(mean, min, max), na.rm=TRUE)
-	OrchClim <- summaryBy(. ~ Year, data=climate[,c(1, 8:10)], FUN=c(mean, min, max), na.rm=TRUE)
-	MajClim <- summaryBy(. ~ Year, data=climate[,c(1, 12:14)], FUN=c(mean, min, max), na.rm=TRUE)
-
-	avgtemps <- summaryBy(Eph_avg + Orch_avg + Maj_avg ~ Year, data=climate, FUN=mean, na.rm=TRUE)
+	#compare minimumn temperatures by garden
 	mintemps <- summaryBy(Eph_min + Orch_min + Maj_min ~ Year, data=climate, FUN=min, na.rm=TRUE)
 
 
