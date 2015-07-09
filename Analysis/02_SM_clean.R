@@ -152,18 +152,37 @@
 		
 		
 	#aggregate population level data with counts of survival and dead
-		popdeath <- aggregate(death ~ pop, sum, data=svdat)
-		poptotal <- aggregate(death ~ pop, length, data=svdat)
-			poptotal$total <- poptotal$death
-			popst <- cbind(popdeath, poptotal$total)
-			names(popst) <- c("pop", "noDead", "total") 
-			popst$noSurv <- popst$total - popst$noDead 
-			popst$propDead <- popst$noDead / popst$total
-										
-		popa <- aggregate(. ~ pop, mean, data=svdat[,-c(1, 3:5, 7:9)])
-			popa$type <- as.integer(popa$type)
-			popa$type <- as.factor(popa$type)
-			levels(popa$type) <-  c("T4x", "T2x", "W4x", "V2x", "V4x")
+		popdeatha <- aggregate(death ~ pop, sum, data=svdat) #sum will give you number dead
+		poptotala <- aggregate(death ~ pop, length, data=svdat) #length will give total number
+			names(poptotala) <- c("pop", "total") #rename to meaningful terms (ie death is really total)
 
-		popdat <- merge(popst, popa, by="pop", all=TRUE)
-		
+		popsta <- merge(popdeatha, poptotala, by = "pop", all = TRUE) #merge death and total by population
+			popsta$surv <- popsta$total - popsta$death #get variable of number survived
+			popsta$propDead <- popsta$death / popsta$total #calculate propotion dead								
+
+		popa <- aggregate(. ~ pop, mean, data=svdat[,-c(1, 3:5, 7:9)]) #aggregate climat variables by pop
+				#mean was chosen, but the climate variables are all the same by pop
+			popa$type <- as.integer(popa$type) #round to nearest integer (due to multiple types per pop)
+			popa$type <- as.factor(popa$type) #code as factor
+			levels(popa$type) <-  c("T4x", "T2x", "W4x", "V2x", "V4x") #give character values to numers
+				popa$type[popa$pop=="UTT3"] <- "T2x" #coded wrong when rounded as.integer above
+				popa$type[popa$pop=="MTW1"] <- "W4x" #coded wrong when rounded as.integer above
+		popdata <- merge(popsta, popa, by="pop", all=TRUE)
+
+			#this data set is all good, but it combines the pops with multiple types into one
+			#same as what is used for pie chart map
+
+	####### OR #######
+
+		popdeath <- aggregate(death ~ pop + type, sum, data=svdat) #sum will give you number dead
+		poptotal <- aggregate(death ~ pop + type, length, data=svdat) #length will give total number
+				names(poptotal) <- c("pop", "type", "total") #rename to meaningful terms (death is really total)
+			popst <- merge(popdeath, poptotal) #merge death and total by population
+				popst$surv <- popst$total - popst$death #get variable of number survived
+				popst$propDead <- popst$death / popst$total #calculate propotion dead
+		pop <- aggregate(. ~ pop + type, mean, data=svdat[,-c(1, 3:5, 7:9)])#aggregate climat variables by pop
+				#mean was chosen, but the climate variables are all the same by pop
+		popdat <- merge(popst, pop, by=c("pop", "type"), all=TRUE) #merge into one data set
+			#this seperates by population and type -- so pops with multiple types are still seperated
+
+
