@@ -56,7 +56,25 @@
 
 
 	#compare minimumn temperatures by garden
-	mintemps <- summaryBy(Eph_min + Orch_min + Maj_min ~ Year, data=climate, FUN=min, na.rm=TRUE)
+		climate$EOdif <- climate$Orch_min - climate$Eph_min
+		climate$EMdif <- climate$Maj_min - climate$Eph_min
+
+			sort(climate$EOdif)
+				#28.5
+			sort(climate$EMdif)
+				#maj min -2.2222
+				#eph min -20.8
+				#18.57777778
+				#date 2013-12-18
+				
+	mintempsmonth <- summaryBy(Eph_min + Orch_min + Maj_min ~ Year + Month, data=climate, FUN=min, na.rm=TRUE)
+		mintempsmonth$EOdif <- mintempsmonth$Orch_min.min - mintempsmonth$Eph_min.min
+		mintempsmonth$EMdif <- mintempsmonth$Maj_min.min - mintempsmonth$Eph_min.min
+
+
+	mintempsyear <- summaryBy(Eph_min + Orch_min + Maj_min ~ Year, data=climate, FUN=min, na.rm=TRUE)
+		mintempsyear$EOdif <- mintempsyear$Orch_min.min - mintempsyear$Eph_min.min
+		mintempsyear$EMdif <- mintempsyear$Maj_min.min - mintempsyear$Eph_min.min
 
 
 #==============================================================================================#
