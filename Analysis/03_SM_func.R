@@ -10,6 +10,7 @@
 #packages
 	###you will need to make sure these parackages are installed first###
 	#load needed packages
+  library(devtools) #allows installation of packages from github
 	library(survival) #survival analysis
 	library(ggplot2) #plotting graphics
 #	library(GGally) #ggsurv to plot KM plot using ggplots
@@ -22,9 +23,11 @@
 #	library(plyr) #used for function rbind.fill in VIF step
 
 #source custom ggsurv package from Edwin Thoen
-	###CHANGE DIRECTORY HERE###
-	source('~/GitHub/ggsurv_m/ggsurv_m_with_size_parameters.R') #this ggsurv plot allows for custom line size
+  source_url("https://raw.githubusercontent.com/lchaney/ggsurv_m/master/ggsurv_m_with_size_parameters.R")
+  #this ggsurv plot allows for custom line size
 		#you can find ggsurv function in the GGally library, but this is a custom :)
+	  #thanks to Edwin Thoen <edwinthoen@gmail.com> for assistance!
+    #more information can be found at github.com/lchaney/ggsurv_m
 
 #==============================================================================================#
 
