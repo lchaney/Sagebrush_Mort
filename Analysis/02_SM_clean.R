@@ -162,5 +162,6 @@
 				#mean was chosen, but the climate variables are all the same by pop
 		popdat <- merge(popst, pop, by=c("pop", "type"), all=TRUE) #merge into one data set
 			#this seperates by population and type -- so pops with multiple types are still seperated
-
-
+    
+		rm(list = c("popdeath", "poptotal", "popst", "pop"))
+		  #remove the inbetween data frames created so as not to clutter global environment
