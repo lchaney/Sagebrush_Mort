@@ -13,11 +13,13 @@
   library(devtools) #allows installation of packages from github
 	library(survival) #survival analysis
 	library(ggplot2) #plotting graphics
+  library(grid) #required to change margins in ggplot
 #	library(GGally) #ggsurv to plot KM plot using ggplots
 	library(cowplot) #for multipanels ggplots
 	library(gridExtra) #arrangeGrob multiple ggplots together
 	library(scales) #required for ggsurv plots
   library(doBy) #used for the summaryBy function
+
 
 #	library(lme4) #used for linear mixed models
 #	library(lmerTest) #calculate p values for fixed and random effects from lmer
