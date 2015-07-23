@@ -149,4 +149,6 @@
 	climsurv <- anova(modglm, test = "F")
 	climsurvrsq <- glmrsq(modglm)
 	
+	coefclimsurv <- coef(modglm)
+	
 #==============================================================================================#

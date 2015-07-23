@@ -111,3 +111,4 @@
 #Ephraim climate survival data
 	climsurv
 	climsurvrsq
+	coefclimsurv
