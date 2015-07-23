@@ -1,3 +1,5 @@
 #Exclued autosaved files
 *(Autosaved).R
 .Rproj.user
+.Rhistory
+*.Rproj
