@@ -36,7 +36,7 @@
 
 		#pull the predicted line from the survival regression
 			#set quantile levels
-			pct <- seq(0.01, 0.99,by = 0.01)
+			pct <- seq(0.01, 0.99, by = 0.01)
 			
 			predict_dat <- data.frame(surv_prop = c(1 - pct, 1 - pct, 1 - pct, 1 - pct, 1 - pct),
                            time = c(predict(ephsurvlogn, newdata = list(type = "T4x"), type = "quantile", p = pct),
@@ -69,7 +69,7 @@
 						   	   guides(linetype = FALSE) +
 						   	   xlim(0, 60) + ylim(0, 1) + 
 						   	   theme_minimal() +
-						   	   theme(axis.line = element_line(color = "black", size = .25),
+						   	   theme(axis.line = element_line(color = "black", size = 0.25),
 						   		 	 legend.title = element_text(face = "italic"))
 						      
 		#http://stackoverflow.com/questions/9151591/how-to-plot-the-survival-curve-generated-by-survreg-package-survival-of-r
@@ -129,8 +129,8 @@
 		modglm <- glm(cbind(surv, death) ~ sday + gspmtcm + type, data = popdat, family = "quasibinomial")
 		
 	#calculate GLM R squared value
-		glmrsq <- function( model, ... ){
-		  (1-exp((model$dev - model$null)/model$df.null)) / (1-exp(-model$null/model$df.null))
+		glmrsq <- function(model, ... ){
+		  (1 - exp((model$dev - model$null)/model$df.null)) / (1 - exp(-model$null/model$df.null))
 		}
 		
 	climsurv <- anova(modglm, test = "F")

@@ -42,10 +42,7 @@
 	#climate data
 	source('~/GitHub/Sagebrush_Mort/Analysis/03b_SM_func_climate.R')
 
-	#ephraim survival data
+	#ephraim survival data and contemporary climate data
 	source('~/GitHub/Sagebrush_Mort/Analysis/03c_SM_func_ephsurv.R')
-
-	#ephraim survival with contemporary climate data
-	source('~/GitHub/Sagebrush_Mort/Analysis/03d_SM_func_ephsurvclim.R')
-
+  
 #==============================================================================================#
