@@ -146,4 +146,7 @@
 		  (1-exp((model$dev - model$null)/model$df.null)) / (1-exp(-model$null/model$df.null))
 		}
 		
-	anova(modglm, test = "F")
+	climsurv <- anova(modglm, test = "F")
+	climsurvrsq <- glmrsq(modglm)
+	
+#==============================================================================================#

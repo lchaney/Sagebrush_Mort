@@ -67,6 +67,8 @@
 	#save above plot to figures folder
 	save_plot("~/Documents/Sagebrush/Manuscript Figures/climgraph.png", deathclim, base_aspect_ratio = 2)
 
+	#print out minimum monthly minimum temperatures by garden
+	mintempsmonth
 #==============================================================================================#
 
 
@@ -84,13 +86,13 @@
 	#fig1
 	
 	#Print log rank test for survival curves
-	svdlrtest
+	svdatlrtest
 	
 	#print posthoc pairwise comparison table of chisquare log-rank test 
 	lrchisqtable
 	
 		#and associated p-values
-		pval_lrchisqtable
+	  pval_lrchisqtagible
 		
 		#new bonferoni corrected p-value for significane
 		newbfp
@@ -101,4 +103,11 @@
 	#probability of survival at different months -- column survival gives you those times 
 	probsurv1
 	probsurv2	
-		
+
+#==============================================================================================#
+	
+	
+#==============================================================================================#
+#Ephraim climate survival data
+	climsurv
+	climsurvrsq
