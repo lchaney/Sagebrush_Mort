@@ -22,16 +22,19 @@ summary of moratality at all 3 gardens
 ```{r surv3summary, echo = FALSE, warning = FALSE, error = FALSE}
 surv3summary
 ```	
-sample sizes tables for all 3 gardens
-```{r surv3dsample, echo = FALSE, warning = FALSE, error = FALSE}
-	surv3dsample
+
+sample sizes tables for all 3 gardens, I'll just display the first couple rows to save space 
+```{r surv3dsample, echo = TRUE, warning = FALSE, error = FALSE}
+	head(surv3dsample)
 ```
 
 ##Contemporary Climate data
 print death and climate plot for all 3 gardens
 ```{r deathclim, echo = FALSE, warning = FALSE, error = FALSE}
-	deathclim
+	plot(deathclim)
 ```
+
+
 print out minimum monthly minimum temperatures by garden
 ```{r mintempsmonth, echo = FALSE, warning = FALSE, error = FALSE}
   mintempsmonth
