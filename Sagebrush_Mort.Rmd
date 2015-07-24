@@ -1,0 +1,84 @@
+---
+title: "Sagebrush_Mort"
+author: "Lindsay Chaney"
+date: "July 23, 2015"
+output: html_document
+---
+
+This is the results of the sagebrush mortality paper.
+
+```{r run, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+source('~/GitHub/Sagebrush_Mort/Analysis/04_SM_do.R')
+```
+
+##Survival for all 3 gardens
+2 by 2 kaplain meyer plot for all 3 gardens
+
+```{r km22plot, echo = FALSE, warning = FALSE, error = FALSE}
+	km22plot
+```	
+
+summary of moratality at all 3 gardens
+```{r surv3summary, echo = FALSE, warning = FALSE, error = FALSE}
+surv3summary
+```	
+sample sizes tables for all 3 gardens
+```{r surv3dsample, echo = FALSE, warning = FALSE, error = FALSE}
+	surv3dsample
+```
+
+##Contemporary Climate data
+print death and climate plot for all 3 gardens
+```{r deathclim, echo = FALSE, warning = FALSE, error = FALSE}
+	deathclim
+```
+print out minimum monthly minimum temperatures by garden
+```{r mintempsmonth, echo = FALSE, warning = FALSE, error = FALSE}
+  mintempsmonth
+```
+
+##Ephraim survival data
+
+print survival regression (Table 2)
+
+```{r summary_ephsurvlogn, echo = FALSE, warning = FALSE, error = FALSE}
+	summary_ephsurvlogn
+```
+
+print kaplien meyer plot with survival regression curves (Figure 1)
+```{r ephsurvplot_lognorm, echo = FALSE, warning = FALSE, error = FALSE}
+	ephsurvplot_lognorm
+```	
+
+Print log rank test for survival curves
+```{r svdatlrtest, echo = FALSE, warning = FALSE, error = FALSE}
+	svdatlrtest
+```	
+print posthoc pairwise comparison table of chisquare log-rank test and pvalues
+```{r lrchisqtable, echo = FALSE, warning = FALSE, error = FALSE}
+	lrchisqtable
+	pval_lrchisqtagible
+```
+Note that the new bonferoni corrected p-value for significance is `r newbfp`
+		
+Median survival is as follows
+```{r medsurv, echo = FALSE, warning = FALSE, error = FALSE}
+	medsurv
+```
+
+Probability of survival at different months -- column survival gives you those times 
+```{r probsurv, echo = FALSE, warning = FALSE, error = FALSE}
+	probsurv1
+	probsurv2	
+```
+
+##Ephraim climate survival data
+Here is the generalized linear model with r squared value and model coefficients
+
+```{r climsurv, echo = FALSE, warning = FALSE, error = FALSE}
+	climsurv
+	climsurvrsq
+	coefclimsurv
+```
+
+And for now that is my results.
