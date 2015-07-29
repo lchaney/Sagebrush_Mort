@@ -23,9 +23,9 @@ summary of moratality at all 3 gardens
 surv3summary
 ```	
 
-sample sizes tables for all 3 gardens, I'll just display the first couple rows to save space 
+sample sizes table for all 3 gardens
 ```{r surv3dsample, echo = TRUE, warning = FALSE, error = FALSE}
-	head(surv3dsample)
+	surv3dsample
 ```
 
 ##Contemporary Climate data

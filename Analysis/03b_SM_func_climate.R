@@ -14,13 +14,13 @@
 		fx4 <- rep(1/30, 30)
 
 			#Ephraim Daily mins
-				E30MAM <- filter(na.omit(climate$Eph_min), fx4, sides=2)
+				E30MAM <- stats::filter(na.omit(climate$Eph_min), fx4, sides=2)
 
 			#Orchard Daily mins
-				O30MAM <- filter(na.omit(climate$Orch_min), fx4, sides = 2)
+				O30MAM <- stats::filter(na.omit(climate$Orch_min), fx4, sides = 2)
 
 			#Major Daily mins
-				M30MAM <- filter(na.omit(climate$Maj_min), fx4, sides = 2)
+				M30MAM <- stats::filter(na.omit(climate$Maj_min), fx4, sides = 2)
 		#I couldn't figure out how to add these columns to the data frame
 		#and allign the missing values so I did that part in excel
 		#(e.g. 	write.csv(E30MAM, "sym.csv"))

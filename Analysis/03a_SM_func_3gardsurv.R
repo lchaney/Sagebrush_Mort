@@ -86,8 +86,7 @@
 	surv3summary <- survfit(Surv(time, death)~ strata(garden), data=surv3d)
 
 	#sample size tables
-	surv3dsample <- with(surv3d, table(pop, type, garden))
-
+	surv3dsample <- surv3d %>% group_by(pop, type, garden) %>% summarise(time = n()) %>% spread(garden, time)
 	
 	#create plot (to append to climate data on when deaths occur)
 		death2 <- ggplot(data = surv3dd, aes(x = date, y = 1, color = garden)) + 
