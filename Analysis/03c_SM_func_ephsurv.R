@@ -109,13 +109,22 @@
 			
 		#median survival: the probability of survival after ______ is 50%
 		#similar to LD50
-		medsurv <- survfit(Surv(time, death) ~ strata(type), data= svdat)
-
+		medsurv <- esurvfit
+		
 		#what is the probability that a plant will survive after 1 year (12mo), 2 year (24mo), 3 years (36mo), 4 years (48mo), 5 years (60mo)
 
 		probsurv1 <- summary(esurvfit, times = seq(from = 12, to = 60, by = 12))
 		probsurv2 <- summary(esurvfit, times = seq(from = 59, to = 60, by = 1))
       #column survival gives the probability of survival at each of those times
+		
+		#population level median survival
+		epopsurvfit <- survfit(Surv(time, death) ~ strata(pop), data = svdat) 
+		
+		popmedsurv <- epopsurvfit
+		
+		popprobsurv1 <- summary(popmedsurv, times = seq(from = 12, to = 60, by = 12))
+		popprobsurv2 <- summary(popmedsurv, times = seq(from = 59, to = 60, by = 1))
+		
 		
 #==============================================================================================#
 		

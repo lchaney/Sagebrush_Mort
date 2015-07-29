@@ -104,6 +104,11 @@
 # 	probsurv1
 # 	probsurv2	
 # 
+# 	#poulation level median survival and probability of survival
+# 	popmedsurv
+# 	popprobsurv1
+# 	popprobsurv2
+# 		
 # #Ephraim climate survival data
 # 	#generalized linear model
 # 	climsurv

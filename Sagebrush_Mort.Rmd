@@ -24,7 +24,7 @@ surv3summary
 ```	
 
 sample sizes table for all 3 gardens
-```{r surv3dsample, echo = TRUE, warning = FALSE, error = FALSE}
+```{r surv3dsample, echo = FALSE, warning = FALSE, error = FALSE}
 	surv3dsample
 ```
 
@@ -64,17 +64,24 @@ print posthoc pairwise comparison table of chisquare log-rank test and pvalues
 ```
 Note that the new bonferoni corrected p-value for significance is `r newbfp`
 		
-Median survival is as follows
+Median survival is as follows for Table 3
 ```{r medsurv, echo = FALSE, warning = FALSE, error = FALSE}
 	medsurv
 ```
 
-Probability of survival at different months -- column survival gives you those times 
+Probability of survival at different months -- column survival gives you those times for Table 3
 ```{r probsurv, echo = FALSE, warning = FALSE, error = FALSE}
 	probsurv1
 	probsurv2	
 ```
 
+Population level median survival and probability of survival for Supl Table 2
+```{r popsurv, echo = FALSE, warning = FALSE, error = FALSE}
+  popmedsurv
+	popprobsurv1
+	popprobsurv2
+```
+	
 ##Ephraim climate survival data
 Here is the generalized linear model with r squared value and model coefficients
 
