@@ -107,8 +107,8 @@
 	     #lat,
 	     #elev,
 	     tdiff = mtwm - mtcm,
-	     adi = (dd5 ** 0.5)/map,
-	     adimindd0 = ((dd5 ** 0.5)/map) * mmindd0,
+	     adi = (sqrt(dd5))/map,
+	     adimindd0 = (sqrt(dd5))/map * mmindd0,
 	     d100,
 	     dd0,
 	     dd5,
@@ -138,12 +138,12 @@
 	     sdimindd0 = ((gsdd5 ** 0.5)/gsp) * mmindd0,
 	     tdgsp  = (mtwm - mtcm)/gsp,
 	     tdmap  = (mtwm - mtcm)/map,
-	     smrpb,
-	     #smrsprpb,
-	     sprp,
-	     winp,
-	     smrp,
-	     sdimtcm = ((gsdd5 ** 0.5)/gsp) * mtcm,
+	     smrpb = smrpb,
+	     #smrsprpb = smrsprb,
+	     sprp = sprp,
+	     winp = winp,
+	     smrp = smrp,
+	     sdimtcm = (sqrt(gsdd5)/gsp) * mtcm,
 	     dd0map = dd0 / map,
 	     dd0gsp = dd0 / gsp))
 		
@@ -151,15 +151,15 @@
 		svdat$type <- factor(svdat$type, levels = c("T4x", "T2x", "W4x", "V2x", "V4x"))
 		
 	#aggregate population level data with counts of survival and dead
-		popdeath <- aggregate(death ~ pop + type, sum, data=svdat) #sum will give you number dead
-		poptotal <- aggregate(death ~ pop + type, length, data=svdat) #length will give total number
+		popdeath <- aggregate(death ~ pop + type, sum, data = svdat) #sum will give you number dead
+		poptotal <- aggregate(death ~ pop + type, length, data = svdat) #length will give total number
 				names(poptotal) <- c("pop", "type", "total") #rename to meaningful terms (death is really total)
 			popst <- merge(popdeath, poptotal) #merge death and total by population
 				popst$surv <- popst$total - popst$death #get variable of number survived
 				popst$propDead <- popst$death / popst$total #calculate propotion dead
-		pop <- aggregate(. ~ pop + type, mean, data=svdat[,-c(1, 3:5, 7:9)])#aggregate climat variables by pop
+		pop <- aggregate(. ~ pop + type, mean, data = svdat[,-c(1, 3:5, 7:9)])#aggregate climat variables by pop
 				#mean was chosen, but the climate variables are all the same by pop
-		popdat <- merge(popst, pop, by=c("pop", "type"), all=TRUE) #merge into one data set
+		popdat <- merge(popst, pop, by = c("pop", "type"), all = TRUE) #merge into one data set
 			#this seperates by population and type -- so pops with multiple types are still seperated
     
 		rm(list = c("popdeath", "poptotal", "popst", "pop"))
