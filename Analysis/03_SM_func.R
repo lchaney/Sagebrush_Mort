@@ -39,12 +39,12 @@
 #==============================================================================================#
 #source functions for each subpart of the analysis
 	#three garden survival
-	source('~/GitHub/Sagebrush_Mort/Analysis/03a_SM_func_3gardsurv.R')
+	source('Analysis/03a_SM_func_3gardsurv.R')
 
 	#climate data
-	source('~/GitHub/Sagebrush_Mort/Analysis/03b_SM_func_climate.R')
+	source('Analysis/03b_SM_func_climate.R')
 
 	#ephraim survival data and contemporary climate data
-	source('~/GitHub/Sagebrush_Mort/Analysis/03c_SM_func_ephsurv.R')
+	source('Analysis/03c_SM_func_ephsurv.R')
   
 #==============================================================================================#
