@@ -9,15 +9,20 @@
 #==============================================================================================#
 # Set working directory and source LOAD, CLEAN, and FUNCTION scripts
 
+	#set working directory -- change this to where you have files saved to
+		setwd("~/Documents/Sagebrush/")
+	
 	#source to LOAD data
-		source('Analysis/01_SM_load.R')
-
+#		source('Analysis/01_SM_load.R')
+		source('~/GitHub/Sagebrush_Mort/Analysis/01_SM_load.R')	
+		
 	#source to CLEAN data
-		source('Analysis/02_SM_clean.R')
-
+#		source('Analysis/02_SM_clean.R')
+		source('~/GitHub/Sagebrush_Mort/Analysis/02_SM_clean.R')
+	
 	#source to perform FUNCTION on data
-		source('Analysis/03_SM_func.R')
-
+#		source('Analysis/03_SM_func.R')
+		source('~/GitHub/Sagebrush_Mort/Analysis/03_SM_func.R')
 #==============================================================================================#
 
 # 
@@ -36,7 +41,7 @@
 # 			#orchplot
 # 	
 # 	#save above plot to figures folder
-# 	save_plot("Output/SF1.png", km22plot,
+# 	save_plot("~/Documents/Sagebrush/Manuscript Figures/SF1.png", km22plot,
 #           ncol = 2,
 #           nrow = 2,
 #           base_aspect_ratio = 2)
@@ -60,7 +65,7 @@
 # 		#clim_graph
 # 	
 # 	#save above plot to figures folder
-# 	save_plot("Output/climgraph.png", deathclim, base_aspect_ratio = 2)
+# 	save_plot("~/Documents/Sagebrush/Manuscript Figures/climgraph.png", deathclim, base_aspect_ratio = 2)
 # 
 # 	#print out minimum monthly minimum temperatures by garden
 # 	mintempsmonth
