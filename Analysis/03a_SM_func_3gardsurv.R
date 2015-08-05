@@ -83,8 +83,11 @@
 		km22plot <- plot_grid(gar3plot, ephplot, majplot, orchplot, labels = c("A", "B", "C", "D"), ncol = 2)
 
 	#summary of surviorship
-	surv3summary <- survfit(Surv(time, death)~ strata(garden), data=surv3d)
+	surv3summary <- survfit(Surv(time, death)~ strata(garden), data = surv3d)
 
+	#logrank test to test for differences in garden
+	gardenlrtest <- survdiff(formula = Surv(time, death) ~ garden, data = surv3d)
+	
 	#sample size tables
 	surv3dsample <- surv3d %>% group_by(pop, type, garden) %>% summarise(time = n()) %>% spread(garden, time)
 	
