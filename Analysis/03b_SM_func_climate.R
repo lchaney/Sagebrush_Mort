@@ -44,7 +44,7 @@
 				   				 "Majors Flat",
 				   				 "Orchard")) +
 				   	theme(legend.title = element_blank(),
-				   		  plot.margin = unit(c(0.5,0.5,-1,0.5), "lines"),
+				   		  plot.margin = unit(c(0.5, 0.5, -1, 0.5), "lines"),
 				   		  #plot.margins #top, #right, #bottom, #left
 				   		  legend.position = c(0.93, 0.9),
 				   		  axis.text.x = element_blank(),
@@ -52,7 +52,7 @@
 
 			#merge the death plot and the climate plot
 
-			deathclim <- arrangeGrob(clim_graph, death2, ncol=1, heights=c(4, 0.9))
+			deathclim <- arrangeGrob(clim_graph, death2, ncol = 1, heights = c(4, 0.9))
 
 
 	#compare minimumn temperatures by garden
