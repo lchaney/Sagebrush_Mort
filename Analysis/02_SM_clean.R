@@ -4,6 +4,7 @@
 # This script is used to CLEAN data needed for the Chaney et al 2015 Sagebrush mortatlity paper
 #==============================================================================================#
 
+
 #==============================================================================================#
 #CLEANING UP surv3d data
 
