@@ -4,7 +4,6 @@
 # This script is used to LOAD data needed for the Chaney et al 2015 Sagebrush mortatlity paper
 #==============================================================================================#
 
-#=== change source file location ===#
 
 #this data set has survival (last data collection in May 2015) for all three gardens
 
@@ -16,9 +15,9 @@
 #Date ranges: 1/1/10 - 5/8/15 for Ephraim and Orchards and 10/20/10 - 3/13/14 for Majors
 #Ephraim data accessed here: http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=2126&state=ut
 #Orchards data accessed here: http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=674&state=id
-#Majors data collected for data logger temperature probe
+#Majors data collected from data logger temperature probe
 
-	climate <- read.csv("Data/daily_temps3.csv")
+	climate <- read.csv("Data/daily_temps.csv")
 
 		#note that moving averages were calculated then copied into excel 
 		#(due to missing values, I couldn't figure out how match them up in R)
