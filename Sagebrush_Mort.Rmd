@@ -3,6 +3,7 @@ title: "Sagebrush_Mort"
 author: "Lindsay Chaney"
 date: "July 23, 2015"
 output: html_document
+  #output_dir: Output
 ---
 
 This is the results of the sagebrush mortality paper.
