@@ -20,98 +20,97 @@
 
 #==============================================================================================#
 
-# 
-# 
-# 
-# #==============================================================================================#
-# # Printing output for 3 garden survival
-# 	
-# 	#print 2 by 2 kaplain meyer plot for all 3 gardens
-# 	km22plot
-# 	
-# 			#or individual km plots
-# 			#gar3plot
-# 			#ephplot
-# 			#majplot
-# 			#orchplot
-# 	
-# 	#save above plot to figures folder
-# 	save_plot("Output/SF1.png", km22plot,
-#           ncol = 2,
-#           nrow = 2,
-#           base_aspect_ratio = 2)
-# 
-# 	#print summary of survivorship
-# 	surv3summary
-# 	
-# 	#print sample sizes tables for all 3 gardens
-# 	surv3dsample
-# 
-# #==============================================================================================#
-# 	
-# #==============================================================================================#
-# # Printing output for climate
-# 	
-# 	#print death and climate plot for all 3 gardens
-# 	deathclim
-# 	
-# 		#or individual graphs
-# 		#death2
-# 		#clim_graph
-# 	
-# 	#save above plot to figures folder
-# 	save_plot("Output/climgraph.png", deathclim, base_aspect_ratio = 2)
-# 
-# 	#print out minimum monthly minimum temperatures by garden
-# 	mintempsmonth
-# #==============================================================================================#
-# 
-# 
-# 
-# #==============================================================================================#
-# #Ephraim survival data
-# 
-# 	#print survival regression (Table 2)
-# 	summary_ephsurvlogn
-# 	
-# 	#print kaplien meyer plot with survival regression curves (Figure 1)
-# 	ephsurvplot_lognorm
-# 	
-# 	#save above plot to figures folder
-# 	#fig1
-# 	
-# 	#Print log rank test for survival curves
-# 	svdatlrtest
-# 	
-# 	#print posthoc pairwise comparison table of chisquare log-rank test 
-# 	lrchisqtable
-# 	
-# 		#and associated p-values
-# 	  pval_lrchisqtagible
-# 		
-# 		#new bonferoni corrected p-value for significane
-# 		newbfp
-# 		
-# 	#median survival
-# 	medsurv
-# 		
-# 	#probability of survival at different months -- column survival gives you those times 
-# 	probsurv1
-# 	probsurv2	
-# 
-# 	#poulation level median survival and probability of survival
-# 	popmedsurv
-# 	popprobsurv1
-# 	popprobsurv2
-# 		
-# #Ephraim climate survival data
-# 	#generalized linear model
-# 	climsurv
-# 	
-# 	#rsquared value
-# 	climsurvrsq
-# 	
-# 	#model coefficients
-# 	coefclimsurv
-# 
-# #==============================================================================================#
+
+
+
+#==============================================================================================#
+# Printing output for 3 garden survival
+	
+	#print 2 by 2 kaplain meyer plot for all 3 gardens
+	km22plot
+	
+			#or individual km plots
+			#gar3plot
+			#ephplot
+			#majplot
+			#orchplot
+	
+	#save above plot to figures folder
+	save_plot("Output/SF1.png", km22plot,
+          ncol = 2,
+          nrow = 2,
+          base_aspect_ratio = 2)
+
+	#print summary of survivorship
+	surv3summary
+	
+	#print sample sizes tables for all 3 gardens
+	surv3dsample
+
+#==============================================================================================#
+	
+#==============================================================================================#
+# Printing output for climate
+	
+	#print death and climate plot for all 3 gardens
+	plot(deathclim) 
+	
+		#or individual graphs
+		#death2
+		#clim_graph
+	
+	#save above plot to figures folder
+	save_plot("Output/climgraph.png", plot(deathclim), base_aspect_ratio = 2)
+
+	#print out minimum monthly minimum temperatures by garden
+	mintempsmonth
+#==============================================================================================#
+
+
+
+#==============================================================================================#
+#Ephraim survival data
+
+	#print survival regression (Table 2)
+	summary_ephsurvlogn
+	
+	#print kaplien meyer plot with survival regression curves (Figure 1)
+	ephsurvplot_lognorm
+	
+	#save above plot to figures folder
+	#fig1
+	
+	#Print log rank test for survival curves
+	svdatlrtest
+	
+	#print posthoc pairwise comparison table of chisquare log-rank test 
+	lrchisqtable
+	
+		#and associated p-values
+	  pval_lrchisqtagible
+		
+		#new bonferoni corrected p-value for significane
+		newbfp
+		
+	#median survival
+	medsurv
+		
+	#probability of survival at different months -- column survival gives you those times 
+	probsurv
+
+	#poulation level differences in survival, median survival and probability of survival
+	poplrtest
+	popmedsurv
+	popprobsurv
+		
+#Ephraim climate survival data
+	#generalized linear model
+	climsurv
+	
+	#rsquared value
+	climsurvrsq
+	
+	#model coefficients
+	coefclimsurv
+
+#==============================================================================================#
