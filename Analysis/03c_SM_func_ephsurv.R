@@ -113,18 +113,14 @@
 		
 		#what is the probability that a plant will survive after 1 year (12mo), 2 year (24mo), 3 years (36mo), 4 years (48mo), 5 years (60mo)
 
-		probsurv1 <- summary(esurvfit, times = seq(from = 12, to = 60, by = 12))
-		probsurv2 <- summary(esurvfit, times = seq(from = 59, to = 60, by = 1))
+		probsurv <- summary(esurvfit, times = c(12, 24, 36, 48, 59))
       #column survival gives the probability of survival at each of those times
 		
-		#population level median survival
+		#population level differences
+		poplrtest <- survdiff(formula = Surv(time, death) ~ type + pop, data = svdat)
 		epopsurvfit <- survfit(Surv(time, death) ~ strata(pop), data = svdat) 
-		
 		popmedsurv <- epopsurvfit
-		
-		popprobsurv1 <- summary(popmedsurv, times = seq(from = 12, to = 60, by = 12))
-		popprobsurv2 <- summary(popmedsurv, times = seq(from = 59, to = 60, by = 1))
-		
+		popprobsurv <- summary(popmedsurv, times = c(12, 24, 36, 48, 59))
 		
 #==============================================================================================#
 		
