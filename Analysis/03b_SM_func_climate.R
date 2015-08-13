@@ -28,28 +28,27 @@
 			#create chart with minimum daily temperatures for the three gardens
 			#in bold is the 30 day moving average for daily minimum temperatures
 			clim_graph <- ggplot(data = climate, aes(x = Date)) +
-				   labs(x = "", y = "Temperature") +
-				   theme_minimal() +
-				   geom_line(aes(y = Eph_min), color = 'darkorange',  size = 0.5, alpha = 0.3) +
-				   geom_line(aes(y = E30MovAvgMin, color = 'EMA'), size = 0.5) +
-				   geom_line(aes(y = Maj_min), color = 'indianred1', size = 0.5, alpha = 0.3) +
-				   geom_line(aes(y = M30MovAvgMin, color = 'MMA'), size = 0.5) +
-				   geom_line(aes(y = Orch_min), color = 'steelblue', size = 0.5, alpha = 0.3) +
-				   geom_line(aes(y = O30MovAvgMin, color = 'OMA'), size = 0.5) +
-				   scale_colour_manual(name = "Legend",
-				   		values = c(EMA = "darkorange",
-				   				 MMA = "indianred1",
-				   				 OMA = "steelblue"),
-				   		labels = c("Ephraim",
-				   				 "Majors Flat",
-				   				 "Orchard")) +
-				   	theme(legend.title = element_blank(),
-				   		  plot.margin = unit(c(0.5, 0.5, -1, 0.5), "lines"),
-				   		  #plot.margins #top, #right, #bottom, #left
-				   		  legend.position = c(0.93, 0.9),
-				   		  axis.text.x = element_blank(),
-				   		  axis.ticks.x = element_blank())
-
+			  labs(x = "", y = "Temperature") +
+			  theme_minimal() +
+			  geom_line(aes(y = Eph_min), color = ephcol,  size = 0.5, alpha = 0.3) +
+			  geom_line(aes(y = E30MovAvgMin, color = 'EMA'), size = 0.7) +
+			  geom_line(aes(y = Maj_min), color = majcol, size = 0.5, alpha = 0.3) +
+			  geom_line(aes(y = M30MovAvgMin, color = 'MMA'), size = 0.55) +
+			  geom_line(aes(y = Orch_min), color = orchcol, size = 0.5, alpha = 0.3) +
+			  geom_line(aes(y = O30MovAvgMin, color = 'OMA'), size = 0.55) +
+			  scale_colour_manual(name = "Legend",
+			                      values = c(EMA = ephcol,
+			                                 MMA = majcol,
+			                                 OMA = orchcol),
+			                      labels = c("Ephraim",
+			                                 "Majors Flat",
+			                                 "Orchard")) +
+			  theme(legend.title = element_blank(),
+			        plot.margin = unit(c(0.5, 0.5, -1, 0.5), "lines"),
+			        #plot.margins #top, #right, #bottom, #left
+			        legend.position = c(0.93, 0.9),
+			        axis.text.x = element_blank(),
+			        axis.ticks.x = element_blank())
 			#merge the death plot and the climate plot
 
 			deathclim <- arrangeGrob(clim_graph, death2, ncol = 1, heights = c(4, 0.9))
