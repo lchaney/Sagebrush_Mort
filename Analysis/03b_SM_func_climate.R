@@ -51,7 +51,7 @@
 			        axis.ticks.x = element_blank())
 			#merge the death plot and the climate plot
 
-			deathclim <- arrangeGrob(clim_graph, death2, ncol = 1, heights = c(4, 0.9))
+			deathclim <- grid.arrange(clim_graph, death2, ncol = 1, heights = c(4, 0.9))
 
 
 	#compare minimumn temperatures by garden
