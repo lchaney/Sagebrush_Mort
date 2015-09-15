@@ -6,7 +6,7 @@ output: html_document
   #output_dir: Output
 ---
 
-This is the results of the sagebrush mortality paper.
+Here are the results of the sagebrush mortality paper.
 
 ```{r run, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
 source('Analysis/04_SM_do.R')
@@ -23,6 +23,14 @@ summary of moratality at all 3 gardens
 ```{r surv3summary, echo = FALSE, warning = FALSE, error = FALSE}
 surv3summary
 ```	
+
+Is there a difference in survival by garden?
+
+```{r garddiff, echo = FALSE, warning = FALSE, error = FALSE}
+gardenlrtest
+gardenlrchisqtable
+gardenpval_lrchisqtagible
+```
 
 sample sizes table for all 3 gardens
 ```{r surv3dsample, echo = FALSE, warning = FALSE, error = FALSE}
@@ -62,9 +70,9 @@ print posthoc pairwise comparison table of chisquare log-rank test and pvalues
 ```{r lrchisqtable, echo = FALSE, warning = FALSE, error = FALSE}
 	lrchisqtable
 	pval_lrchisqtagible
+	pval_lrchisqtagiblefdr
 ```
-Note that the new bonferoni corrected p-value for significance is `r newbfp`
-		
+
 Median survival is as follows for Table 3
 ```{r medsurv, echo = FALSE, warning = FALSE, error = FALSE}
 	medsurv
