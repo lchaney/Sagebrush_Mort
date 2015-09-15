@@ -34,11 +34,11 @@
 				ephplot <- ggsurv_m(sfit_typeE, lty.est = 2, plot.cens = FALSE, size.est = 1) +
 								   scale_color_manual(name = "Ephraim",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-								   		values = c(T4x = "#e31a1c",
-								   				   T2x = "#ff7f00",
-								   				   W4x = "#33a02c",
-								   				   V2x = "#1f78b4",
-								   				   V4x = "#885dbc")) +
+								   		values = c(T4x = T4xcol,
+								   				   T2x = T2xcol,
+								   				   W4x = W4xcol,
+								   				   V2x = V2xcol,
+								   				   V4x = V4xcol)) +
 								   guides(linetype = FALSE) +
 								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
@@ -50,11 +50,11 @@
 				majplot <- ggsurv_m(sfit_typeM, lty.est = 3, plot.cens = FALSE, size.est = 1) +
 								   scale_color_manual(name = "Majors",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-								   		values = c(T4x = "#e31a1c",
-								   				   T2x = "#ff7f00",
-								   				   W4x = "#33a02c",
-								   				   V2x = "#1f78b4",
-								   				   V4x = "#885dbc")) +
+								   		values = c(T4x = T4xcol,
+								   		           T2x = T2xcol,
+								   		           W4x = W4xcol,
+								   		           V2x = V2xcol,
+								   		           V4x = V4xcol)) +
 								   guides(linetype = FALSE) +
 								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
@@ -66,11 +66,11 @@
 				orchplot <- ggsurv_m(sfit_typeO, lty.est = 4, plot.cens = FALSE, size.est = 1) +
 								   scale_color_manual(name = "Orchards",
 								   		breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-								   		values = c(T4x = "#e31a1c",
-								   				   T2x = "#ff7f00",
-								   				   W4x = "#33a02c",
-								   				   V2x = "#1f78b4",
-								   				   V4x = "#885dbc")) +
+								   		values = c(T4x = T4xcol,
+								   		           T2x = T2xcol,
+								   		           W4x = W4xcol,
+								   		           V2x = V2xcol,
+								   		           V4x = V4xcol)) +
 								   guides(linetype = FALSE) +
 								   xlim(0, 60) + ylim(0, 1) + 
 								   theme_minimal() +
@@ -83,10 +83,29 @@
 		km22plot <- plot_grid(gar3plot, ephplot, majplot, orchplot, labels = c("A", "B", "C", "D"), ncol = 2)
 
 	#summary of surviorship
-	surv3summary <- survfit(Surv(time, death)~ strata(garden), data = surv3d)
+	surv3summary <- survfit(Surv(time, death) ~ strata(garden), data = surv3d)
 
 	#logrank test to test for differences in garden
 	gardenlrtest <- survdiff(formula = Surv(time, death) ~ garden, data = surv3d)
+
+		#now posthoc comparisons between each garden
+	  #how many comparisons?
+	  gardensize <- length(unique(surv3d$garden))
+	
+	  #function that will do pairwise comparisons (see here)
+	  gardenlrchisqtable <- matrix(0., gardensize, gardensize) 
+	  for (i in 1:gardensize) { 
+	    for (j in (1:gardensize)[-i]) {
+	      temp <- survdiff(Surv(time, death) ~ garden, data = surv3d,
+	                       subset = (garden %in% (unique(garden))[c(i,j)]))
+	      gardenlrchisqtable[i,j] <- temp$chisq
+	    }
+	  } 
+	  rownames(gardenlrchisqtable) <- unique(surv3d$garden)
+  	colnames(gardenlrchisqtable) <- unique(surv3d$garden)
+	
+	  #and p-values for the table
+	  gardenpval_lrchisqtagible <- round(pchisq(gardenlrchisqtable, 1, lower.tail = FALSE), 5)
 	
 	#sample size tables
 	surv3dsample <- surv3d %>% group_by(pop, type, garden) %>% summarise(time = n()) %>% spread(garden, time)
@@ -98,7 +117,7 @@
 		    theme_minimal() +
 		    scale_y_continuous(breaks = 1) +
 			labs(x = "Year", y = "Mortality") +
-			scale_colour_manual(values = c("darkorange","indianred1", "steelblue"), 
+			scale_colour_manual(values = c(ephcol, majcol, orchcol), 
 								labels = c("Ephraim", "Majors Flat", "Orchard")) +
 			theme(legend.title = element_blank(), 
 				  plot.margin = unit(c(-2.7,0.5,0.5,0.5), "lines"), 
