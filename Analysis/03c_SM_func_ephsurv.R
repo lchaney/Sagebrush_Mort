@@ -27,13 +27,6 @@
 			
 	#Kaplien Meyer plot with survival regression curve generated
 
-		#specify colors for each type
-			typecolors <- c(T4x = "#e31a1c",
-		   				    T2x = "#ff7f00",
-		   				    W4x = "#33a02c",
-		   				    V2x = "#1f78b4",
-		   				    V4x = "#885dbc")
-
 		#pull the predicted line from the survival regression
 			#set quantile levels
 			pct <- seq(0.01, 0.99, by = 0.01)
@@ -54,18 +47,22 @@
 		ephsurvplot_lognorm <- ggsurv_m(esurvfit, 
 										lty.est = 1, 
 										plot.cens = TRUE, 
-										cens.col = typecolors, 
+										cens.col = c(T4x = T4xcol,
+										             T2x = T2xcol,
+										             W4x = W4xcol,
+										             V2x = V2xcol,
+										             V4x = V4xcol), 
 										size.est = 1, 
 										size.cens = 8,
 										cens.shape = 43) +
 						   	    geom_line(data = predict_dat, aes(x = time, y = surv_prop), linetype = "dotdash") +
 						   	    scale_color_manual(name = "Type",
 						   				breaks = c("T4x", "T2x", "W4x", "V2x", "V4x"),
-						   				values = c(T4x = "#e31a1c",
-						   				   T2x = "#ff7f00",
-						   				   W4x = "#33a02c",
-						   				   V2x = "#1f78b4",
-						   				   V4x = "#885dbc")) +
+						   				values = c(T4x = T4xcol,
+						   				   T2x = T2xcol,
+						   				   W4x = W4xcol,
+						   				   V2x = V2xcol,
+						   				   V4x = V4xcol)) +
 						   	   guides(linetype = FALSE) +
 						   	   xlim(0, 60) + ylim(0, 1) + 
 						   	   theme_minimal() +
@@ -100,12 +97,11 @@
 			rownames(lrchisqtable) <- unique(svdat$type)
 			colnames(lrchisqtable) <- unique(svdat$type)
 			
+			lrchisqtable[lower.tri(lrchisqtable, diag = TRUE)] <- NA
+			
 			#and p-values for the table
 			pval_lrchisqtagible <- round(pchisq(lrchisqtable, 1, lower.tail = FALSE), 5)
-			
-			#need to correct for multiple comparisons now, we will use the conservative bonferroni
-			newbfp <- (0.05/(((typesize - 1) * typesize)/2))
-
+			pval_lrchisqtagiblefdr <- round(p.adjust(pchisq(lrchisqtable, 1, lower.tail = FALSE), method = "fdr"), 5)
 			
 		#median survival: the probability of survival after ______ is 50%
 		#similar to LD50
