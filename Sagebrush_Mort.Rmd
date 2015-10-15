@@ -8,7 +8,7 @@ output: html_document
 
 Here are the results of the sagebrush mortality paper.
 
-```{r run, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+```{r run, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE, fig.keep='none'}
 source('Analysis/04_SM_do.R')
 ```
 
