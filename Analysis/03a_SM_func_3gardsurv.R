@@ -7,8 +7,43 @@
 
 
 #==============================================================================================#
-#3 garden survival
+#3 garden glm
+  
+  #restucture data so summarized by each pop and garden
+  surv3counts <- surv3d %>% 
+    group_by(pop, type, garden) %>% 
+    summarise(death = sum(death), total = n()) %>% 
+    mutate(surv = total - death, propdead = death / total)
 
+  #glm for the 3 gardens
+  fit3 <- glm(cbind(surv, death) ~ pop  + garden + pop:garden, 
+              data = surv3counts, family = "quasibinomial")
+
+  anova(fit3, test = "F")
+  
+    #restructure data for plotting
+    s3c <- surv3counts %>% ungroup() %>% arrange(garden, propdead)
+      s33c <- as.data.frame(s3c)
+      
+      #create a dummie variable with pop as a number for coloring purposes
+      s33c$popnum <- as.integer(with(s33c, factor(pop, 
+                                      levels = pop[order(garden, propdead)], 
+                                      ordered = TRUE)))
+
+
+      #interaction plot
+      ggplot(data = s33c, 
+             aes(x = garden, y = propdead, group = pop, color = popnum)) + 
+        stat_summary(fun.y = mean, geom = "line") + 
+        scale_color_gradientn(colours = c("red","violet","blue")) + 
+        theme(legend.position = "none") + 
+        labs(x = "Garden", y = "Proportion Dead")
+
+#==============================================================================================#
+
+
+#==============================================================================================#
+#3 garden survival
 
 	#fit cox ph model to use in kaplain meyer plots
 	sfit_garden <- survfit(Surv(time, death) ~ strata(garden), data=surv3d)
