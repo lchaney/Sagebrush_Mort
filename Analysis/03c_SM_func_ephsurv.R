@@ -102,7 +102,8 @@
 			#and p-values for the table
 			pval_lrchisqtagible <- round(pchisq(lrchisqtable, 1, lower.tail = FALSE), 5)
 			pval_lrchisqtagiblefdr <- round(p.adjust(pchisq(lrchisqtable, 1, lower.tail = FALSE), method = "fdr"), 5)
-			
+			pval_lrchisqtagiblebonf <- round(p.adjust(pchisq(lrchisqtable, 1, lower.tail = FALSE), method = "bonferroni"), 5)
+		
 		#median survival: the probability of survival after ______ is 50%
 		#similar to LD50
 		medsurv <- esurvfit
