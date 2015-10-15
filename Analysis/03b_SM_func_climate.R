@@ -53,9 +53,27 @@
 
 			deathclim <- grid.arrange(clim_graph, death2, ncol = 1, heights = c(4, 0.9))
 
-
+	#filter for just during study period
+	climaterange <- filter(climate, Date >= as.Date("2010-04-15 00:00:00"), Date < as.Date("2015-05-08 00:00:00"))
+			
 	#compare minimumn temperatures by garden
-	mintempsmonth <- summaryBy(Eph_min + Maj_min + Orch_min ~ Year + Month, data = climate, FUN = min, na.rm = TRUE)
+	mintempsmonth <- summaryBy(Eph_min + Maj_min + Orch_min ~ Year + Month, data = climaterange, FUN = min, na.rm = TRUE)
 	is.na(mintempsmonth) <- do.call(cbind,lapply(mintempsmonth, is.infinite))
+
+	winterclimaterange <- filter(climaterange, Month < "3", Month > "11") #December, Jan and Feb
+	max(winterclimaterange$Maj_min - winterclimaterange$Eph_min, na.rm = TRUE)
+	mean(winterclimaterange$Maj_min - winterclimaterange$Eph_min, na.rm = TRUE)
+	max(winterclimaterange$Orch_min - winterclimaterange$Eph_min, na.rm = TRUE)
+	mean(winterclimaterange$Orch_min - winterclimaterange$Eph_min, na.rm = TRUE)
+	
+	#compare average temperatures by garden
+	tempsmonth <- summaryBy(Eph_avg + Maj_avg + Orch_avg ~ Year + Month, data = climaterange, FUN = mean, na.rm = TRUE)
+
+	mean(climaterange$Orch_avg - climaterange$Eph_avg, na.rm = TRUE)
+	mean(climaterange$Orch_avg - climaterange$Maj_avg, na.rm = TRUE)
+	
+	#compare maximum temperatures by garden
+	maxtempsmonth <- summaryBy(Eph_max + Maj_max + Orch_max ~ Year + Month, data = climaterange, FUN = max, na.rm = TRUE)
+	is.na(maxtempsmonth) <- do.call(cbind,lapply(maxtempsmonth, is.infinite))
 	
 #==============================================================================================#
