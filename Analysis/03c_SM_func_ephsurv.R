@@ -104,6 +104,10 @@
 			pval_lrchisqtagiblefdr <- round(p.adjust(pchisq(lrchisqtable, 1, lower.tail = FALSE), method = "fdr"), 5)
 			pval_lrchisqtagiblebonf <- round(p.adjust(pchisq(lrchisqtable, 1, lower.tail = FALSE), method = "bonferroni"), 5)
 		
+						pval_lrchisqtagiblebonf <- matrix(pval_lrchisqtagiblebonf, nrow = typesize, ncol = typesize)
+						rownames(pval_lrchisqtagiblebonf) <- unique(svdat$type)
+						colnames(pval_lrchisqtagiblebonf) <- unique(svdat$type)
+						 
 		#median survival: the probability of survival after ______ is 50%
 		#similar to LD50
 		medsurv <- esurvfit
@@ -114,9 +118,8 @@
       #column survival gives the probability of survival at each of those times
 		
 		#population level differences
-		poplrtest <- survdiff(formula = Surv(time, death) ~ type + pop, data = svdat)
-		epopsurvfit <- survfit(Surv(time, death) ~ strata(pop), data = svdat) 
-		popmedsurv <- epopsurvfit
+		poplrtest <- survdiff(formula = Surv(time, death) ~ pop, data = svdat)
+		popmedsurv <- survfit(Surv(time, death) ~ strata(pop), data = svdat) 
 		popprobsurv <- summary(popmedsurv, times = c(12, 24, 36, 48, 59))
 		
 #==============================================================================================#

@@ -3,7 +3,6 @@ title: "Sagebrush_Mort"
 author: "Lindsay Chaney"
 date: "July 23, 2015"
 output: html_document
-  #output_dir: Output
 ---
 
 Here are the results of the sagebrush mortality paper.
@@ -13,6 +12,13 @@ source('Analysis/04_SM_do.R')
 ```
 
 ##Survival for all 3 gardens
+Generalized linear model for garden death and accompaning interaction plot
+
+```{r glm3, echo = FALSE, warning = FALSE, error = FALSE}
+aovfit3
+int_plot
+```	
+
 2 by 2 kaplain meyer plot for all 3 gardens
 
 ```{r km22plot, echo = FALSE, warning = FALSE, error = FALSE}
@@ -67,10 +73,11 @@ Print log rank test for survival curves
 	svdatlrtest
 ```	
 print posthoc pairwise comparison table of chisquare log-rank test and pvalues
+including bonferroni corrected p values
 ```{r lrchisqtable, echo = FALSE, warning = FALSE, error = FALSE}
 	lrchisqtable
 	pval_lrchisqtagible
-	pval_lrchisqtagiblefdr
+	pval_lrchisqtagiblebonf
 ```
 
 Median survival is as follows for Table 3

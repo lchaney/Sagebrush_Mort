@@ -19,25 +19,25 @@
   fit3 <- glm(cbind(surv, death) ~ pop  + garden + pop:garden, 
               data = surv3counts, family = "quasibinomial")
 
-  anova(fit3, test = "F")
+  aovfit3 <- anova(fit3, test = "F")
   
     #restructure data for plotting
     s3c <- surv3counts %>% ungroup() %>% arrange(garden, propdead)
       s33c <- as.data.frame(s3c)
       
-      #create a dummie variable with pop as a number for coloring purposes
+      #create a dummie variable with pop as a number for coloring purposes - ordered by mortality in Ephraim
       s33c$popnum <- as.integer(with(s33c, factor(pop, 
                                       levels = pop[order(garden, propdead)], 
                                       ordered = TRUE)))
 
 
       #interaction plot
-      ggplot(data = s33c, 
-             aes(x = garden, y = propdead, group = pop, color = popnum)) + 
-        stat_summary(fun.y = mean, geom = "line") + 
+      int_plot <- ggplot(data = s33c, 
+             aes(x = garden, y = 1 - propdead, group = pop, color = popnum)) + 
+        stat_summary(fun.y = mean, na.rm = TRUE, geom = "line") + 
         scale_color_gradientn(colours = c("red","violet","blue")) + 
         theme(legend.position = "none") + 
-        labs(x = "Garden", y = "Proportion Dead")
+        labs(x = "Garden", y = "Survival")
 
 #==============================================================================================#
 
