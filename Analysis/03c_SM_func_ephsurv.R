@@ -131,7 +131,7 @@
   #not shown is the narrowing down of this model to the two climate variables that gives the best Rsq value
 		
 	#model using proportion died
-		modglm <- glm(cbind(surv, death) ~ sday + gspmtcm + type, data = popdat, family = "quasibinomial")
+		modglm <- glm(cbind(surv, death) ~ gspmtcm + sday + type, data = popdat, family = "quasibinomial")
 		
 	#calculate GLM R squared value
 		glmrsq <- function(model, ... ){
