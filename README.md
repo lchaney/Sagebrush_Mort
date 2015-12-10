@@ -22,22 +22,16 @@ data citation
 
 To be able to rerun analysis, the first step is to make sure all data files (there are 3) are downloaded.
 Place all data (csv files) into a folder named Data. Analysis scripts (.R files) will
-be run in a folder named Analysis
+be run in a folder named Analysis. Set your working directory to the folder that contains these two folders.
 
-From your R console, source the Do script (`04_SM_do.R`) will run all analysis.
+From your R console, source the Do script (`04_SM_do.R`) to run all analysis.
 This script sources scripts to Load data (`01_SM_load.R`) to Clean data (`02_SM_clean.R`) and 
-to perform analsyses (`03_SM_func.R`) [Note that the Func script has been broken up for each 
-different part of the analysis.
+to perform analsyses (`03_SM_func.R`) [Note that the Functions script has been broken up for each 
+different part of the analysis, including installing and loading packages (`03_SM_func_pack.R`.]
 
-Currently there is not a script to save output.
+Currently there is not a script to save outputs.
 
-I will set that up using similar code
-```
-if(!file.exists("output"))
-	dir.create("output")
-```
-
-#Reproduce R figures and results
+#Report of R figures and results
 
 To reprodcue R figures and results from statistical analysis, a markdown report has been made (`Sagebrush_Mort.Rmd`).
 
@@ -47,6 +41,12 @@ If you are not using RStudio then you simply need to call the render function fo
 
 ```
 rmarkdown::render("Sagebrush_Mort.Rmd")
+```
+
+If this does not work, make sure the R Markdown package is installed from CRAN as follows:
+
+```
+install.packages("rmarkdown")
 ```
 
 ## Citation
