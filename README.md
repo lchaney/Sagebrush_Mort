@@ -20,18 +20,34 @@ data citation
 
 ##Running
 
-Place all data (csv files) into a folder named Data
-Place all scripts (.R files) into a folder named Analysis
+To be able to rerun analysis, the first step is to make sure all data files (there are 3) are downloaded.
+Place all data (csv files) into a folder named Data. Analysis scripts (.R files) will
+be run in a folder named Analysis
 
-You will only need to run the Do script (04_SM_do.R).
+From your R console, source the Do script (`04_SM_do.R`) will run all analysis.
+This script sources scripts to Load data (`01_SM_load.R`) to Clean data (`02_SM_clean.R`) and 
+to perform analsyses (`03_SM_func.R`) [Note that the Func script has been broken up for each 
+different part of the analysis.
 
-From there you will source the scripts to Load data (01_SM_load.R) to Clean data (02_SM_clean.R) and to perform analsyses (03_SM_func.R) [Note that script has been broken up for each different part of the analysis].
+Currently there is not a script to save output.
 
-From the Do script you will be able to print and save key outputs.
+I will set that up using similar code
+```
+if(!file.exists("output"))
+	dir.create("output")
+```
 
 #Reproduce R figures and results
 
-To reprodcue R figures and results from statistical analysis, use markdown.
+To reprodcue R figures and results from statistical analysis, a markdown report has been made (`Sagebrush_Mort.Rmd`).
+
+To run the report in RStudio the “Knit” command (Ctrl+Shift+K) will render the document and display a preview of it.
+
+If you are not using RStudio then you simply need to call the render function for rmarkdown:
+
+```
+rmarkdown::render("Sagebrush_Mort.Rmd")
+```
 
 ## Citation
 
