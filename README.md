@@ -31,7 +31,7 @@ different part of the analysis, including installing and loading packages (`03_S
 
 Currently there is not a script to save outputs.
 
-#Report of R figures and results
+###Report of R figures and results
 
 To reprodcue R figures and results from statistical analysis, a markdown report has been made (`Sagebrush_Mort.Rmd`).
 
