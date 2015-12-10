@@ -1,104 +1,119 @@
 ---
-title: "Sagebrush_Mort"
-author: "Lindsay Chaney"
-date: "July 23, 2015"
-output: html_document
+title: "Adaptive genetic response to climate affects survival 
+in Artemesia tridentata (big sagebrush)"
+author: "Lindsay Chaney, Bryce Richardson"
+date: "December x, 2015"
+output:
+  html_document:
+    toc: true
+    theme: united
+  pdf_document:
+    toc: true
+    highlight: zenburn
 ---
 
-Here are the results of the sagebrush mortality paper.
+# Abstract:
+
+> A genecological approach was used to explore genetic variation in survival in in Artemisia tridentata (big sagebrush). Artemisia tridentata is a fundamental shrub species in western North America, large declines of this species and its affect on associated wildlife has resulted in increased conservation and restoration efforts. Common garden experiments were established at three sites with seedlings from 55 sources populations . Populations included each of the three predominant subspecies, A. t. tridentata, A. t. wyomingnesis, and A. t. vaseyana, and ploidy types. Survival was monitored for five-years to assess differences in survival between gardens and populations. 
+> We found evidence of adaptive geographic variation for survival in A. tridentata. Survival within gardens differed by population and is predicted by climate of the seed source. Plants from more continental climates (greater summer-winter temperature differences) had the highest levels of survival while populations from warmer and drier sites had the highest levels of mortality. Survival differed between gardens and is driven by winter minimum temperatures in association with atmospheric decoupling. Understanding how genetic variation is arrayed across the landscape through association with climate can greatly enhance the success of restoration and conservation.
+
+*Here I will present figures and results from R analysis presented in order adressed in the paper.*
 
 ```{r run, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE, fig.keep='none'}
 source('Analysis/04_SM_do.R')
 ```
 
-##Survival for all 3 gardens
-Generalized linear model for garden death and accompaning interaction plot
+## Supplementary Table 1
+Population information from seed source location.
+
+```{r surv3dsample, echo = FALSE, warning = FALSE, error = FALSE}
+	surv3dsample #sample sizes table for all 3 gardens
+```
+
+## Table 1
+Geographic and climatic attributes of the three common gardens.
+
+*find in text*
+
+## Supplementary Figure 1
+Experimental design includes three common garden locations (stars) and 55 source populations (pentagons). Populations are seed source locations of three big sagebrush subspecies and two ploidy levels, or types (indicated by colored pentagons). Type: T4x = tetraploid tridentata; T2x = diploid tridentata; W4x = tetraploid wyomingensia; V2x = diploid vaseyana; V4x = tetraploid vaseyana.
+
+*Generated in QGis*
+
+## Table 2
+Generalized linear model of survival proportion of each population.
 
 ```{r glm3, echo = FALSE, warning = FALSE, error = FALSE}
 aovfit3
-int_plot
 ```	
 
-2 by 2 kaplain meyer plot for all 3 gardens
+## Supplementary Figure 2
+Kaplien-Meir survivorship curves for big sagebrush by (a) common garden and survivor ship by type (subspecies:ploidy) for the (b) Ephraim, (c) Majors Flat and (d) Orchards garden. 
 
 ```{r km22plot, echo = FALSE, warning = FALSE, error = FALSE}
 	km22plot
 ```	
 
-summary of moratality at all 3 gardens
+And a summary of moratality at all 3 gardens
+
 ```{r surv3summary, echo = FALSE, warning = FALSE, error = FALSE}
 surv3summary
 ```	
 
-Is there a difference in survival by garden?
+## Supplementary Figure 3
+Interaction plot of genetics and environment for each population. Each line indicates survival proportion for a given population in each respective common garden.
 
-```{r garddiff, echo = FALSE, warning = FALSE, error = FALSE}
-gardenlrtest
-gardenlrchisqtable
-gardenpval_lrchisqtagible
-```
+```{r glm3int, echo = FALSE, warning = FALSE, error = FALSE}
+int_plot
+```	
 
-sample sizes table for all 3 gardens
-```{r surv3dsample, echo = FALSE, warning = FALSE, error = FALSE}
-	surv3dsample
-```
-
-##Contemporary Climate data
-print death and climate plot for all 3 gardens
-```{r deathclim, echo = FALSE, warning = FALSE, error = FALSE}
-	plot(deathclim)
-```
-
-
-print out minimum monthly minimum temperatures by garden
-```{r mintempsmonth, echo = FALSE, warning = FALSE, error = FALSE}
-  mintempsmonth
-```
-
-##Ephraim survival data
-
-print survival regression (Table 2)
-
-```{r summary_ephsurvlogn, echo = FALSE, warning = FALSE, error = FALSE}
-	summary_ephsurvlogn
-```
-
+## Figure 1
+Kaplien-Meir survivorship curves by type (subspecies:ploidy) in big sagebrush. Model estimates of the log-normal survivorship curve from the survivorship regression is overlaid to assess fit of model. Survivorship was significantly different by type (subspecies: ploidy).
 print kaplien meyer plot with survival regression curves (Figure 1)
+
 ```{r ephsurvplot_lognorm, echo = FALSE, warning = FALSE, error = FALSE}
 	ephsurvplot_lognorm
 ```	
 
-Print log rank test for survival curves
+Log rank test for survival curves in Eprhaim
 ```{r svdatlrtest, echo = FALSE, warning = FALSE, error = FALSE}
 	svdatlrtest
 ```	
-print posthoc pairwise comparison table of chisquare log-rank test and pvalues
-including bonferroni corrected p values
+
+Posthoc pairwise comparison table of chisquare log-rank test, pvalues, and
+bonferroni corrected p values.
 ```{r lrchisqtable, echo = FALSE, warning = FALSE, error = FALSE}
 	lrchisqtable
 	pval_lrchisqtagible
 	pval_lrchisqtagiblebonf
 ```
 
-Median survival is as follows for Table 3
-```{r medsurv, echo = FALSE, warning = FALSE, error = FALSE}
+## Supplementary Table 2
+Analysis of big sagebrush by type (subspecies:ploidy) using  regression for a parametric survival model (accelerated failure time).
+This model assumes that survival time changes by a constant factor when comparing different levels of covariates. Type T4x is the baseline (intercept) value. The coefficient value is the factor by which the survival time is multiplied for that covariate compared to the baseline. The scale indicates how the rate of survival changes over time. The z-values and p-values are used to test for statistical significance of any difference between groups. Type: T4x = tetraploid tridentata; T2x = diploid tridentata; W4x = tetraploid wyomingensia; V2x = diploid vaseyana; V4x = tetraploid vaseyana
+
+```{r summary_ephsurvlogn, echo = FALSE, warning = FALSE, error = FALSE}
+	summary_ephsurvlogn
+```
+
+## Supplementary Table 3
+Probability of and median survival for each type of big sagebrush.
+Probability of survival shown for 12, 24, 36, 48 and 59 months and median survival shows at which month there is 50% chance of survival. 
+
+```{r med_probsurv, echo = FALSE, warning = FALSE, error = FALSE}
 	medsurv
+	probsurv
 ```
 
-Probability of survival at different months -- column survival gives you those times for Table 3
-```{r probsurv, echo = FALSE, warning = FALSE, error = FALSE}
-	probsurv	
-```
+##Figure 2
+Proportion survival in Ephraim garden for each source population. Diagram indicates proportion of survival for each population, dark color indicates mortality while the light color indicates survival. Color of each population is determined by type (subspecies:ploidy).
+Type: T4x = tetraploid tridentata; T2x = diploid tridentata; W4x = tetraploid wyomingensia; V2x = diploid vaseyana; V4x = tetraploid vaseyana
 
-Population level differences in survival, median survival and probability of survival for Supl Table 2
-```{r popsurv, echo = FALSE, warning = FALSE, error = FALSE}
-	poplrtest
-	popmedsurv
-	popprobsurv
-```
-	
-##Ephraim climate survival data
-Here is the generalized linear model with r squared value and model coefficients
+*Generated in QGis*
+
+## Table 3
+Generalized linear model for proportion survival of big sagebrush in the Ephraim garden.
+Type, the subspecies ploidy combination, and provenance (source population) climate variables GSPMTCM and SDAY explain most variation in the model (R2 = 0.757). GSPMTCM: interaction of growing season precipitation (Apr-Sep) and mean temperature in coldest moth; SDAY: Julian date of the last freezing day of the spring
 
 ```{r climsurv, echo = FALSE, warning = FALSE, error = FALSE}
 	climsurv
@@ -106,4 +121,24 @@ Here is the generalized linear model with r squared value and model coefficients
 	coefclimsurv
 ```
 
-And for now that is my results.
+## Figure 3
+Bioclimatic model of survivorship in big sagebrush. Log-link transformed coefficients of slopes and intercepts of the provenance climate model was used to project probability of survival into the niche boundaries of wyomingnesis big sagebrush. Climate predictors included in the model are SDAY and GSPMTCM. Areas that are cooler and wetter have higher probability of survival (blue) while areas that are warmer and drier have lower probability of survival (red).
+SDAY: Julian date of the last freezing day of the spring; GSPMTCM: interaction of growing season precipitation (Apr-Sep) and mean temperature in coldest month.
+
+*Generated in QGis*
+
+## Supplementary Figure 4
+Top panel shows minimum daily temperatures (light lines) with 30 day moving averages (bold lines) for the three garden locations during the experimental time period. Bottom panel shows number of deaths for each garden at each of the census times. Ephraim (red), Majors Flat (purple) and Orchards (turquoise) garden.
+
+```{r deathclim, echo = FALSE, warning = FALSE, error = FALSE}
+	plot(deathclim)
+```
+
+## Supplementary Table 4
+Probability of  survival, median survival, and mortality numbers for each population of big sagebrush in the Ephraim common garden.
+
+```{r popsurv, echo = FALSE, warning = FALSE, error = FALSE}
+	poplrtest
+	popmedsurv
+	popprobsurv
+```
