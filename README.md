@@ -1,6 +1,6 @@
 #Adaptive genetic response to climate affects survival in Artemisia tridentata (big sagebrush)
 
-[Lindsay Chaney] (http://www.lindsaychaney.com) and [Bryce Richardson] (http://www.fs.fed.us/rmrs/people/profile.php?alias=brichardson02)
+[Lindsay Chaney] (http://www.lindsaychaney.com) and [Bryce Richardson] (http://www.fs.fed.us/rmrs-beta/people/richardson-bryce)
 
 This repository contains all the code used in the manuscript:
 
