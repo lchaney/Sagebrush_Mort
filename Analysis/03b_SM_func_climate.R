@@ -51,7 +51,7 @@
 			        axis.ticks.x = element_blank())
 			#merge the death plot and the climate plot
 
-			deathclim <- grid.arrange(clim_graph, death2, ncol = 1, heights = c(4, 0.9))
+			deathclim <- arrangeGrob(clim_graph, death2, ncol = 1, heights = c(4, 0.9))
 
 	#filter for just during study period
 	climaterange <- filter(climate, Date >= as.Date("2010-04-15 00:00:00"), Date < as.Date("2015-05-08 00:00:00"))
