@@ -8,7 +8,7 @@
 #==============================================================================================#
 #install and load the following packages for graphing
 packagelist <- c("devtools", "survival", "ggplot2", "grid", "cowplot", 
-                 "gridExtra", "scales", "doBy", "tidyr", "dplyr")
+                 "gridExtra", "scales", "doBy", "tidyr", "dplyr", "rmarkdown")
 
 new.packages <- packagelist[!(packagelist %in% installed.packages()[,"Package"])]
 
@@ -25,6 +25,7 @@ if(length(new.packages)>0) {install.packages(new.packages)}
   library(doBy) #used for the summaryBy function
   library(tidyr) #used for data wrangling
   library(dplyr) #used for data wrangling
+  library(rmarkdown) #used to compile final report
 
 #source custom ggsurv package from Edwin Thoen
   source_url("https://raw.githubusercontent.com/lchaney/ggsurv_m/master/ggsurv_m_with_size_parameters.R")
