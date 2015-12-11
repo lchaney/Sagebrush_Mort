@@ -32,7 +32,7 @@ Figures generated in R will be saved as `.png` files in a folder called Output.
 
 ###Report of R figures and results
 
-To reprodcue R figures and results from statistical analysis, a markdown report has been made (`Sagebrush_Mort.Rmd`).
+To reprodcue R figures and results from statistical analysis, a html report is created using markdown (`Sagebrush_Mort.Rmd`).
 
 To run the report in RStudio the “Knit” command (Ctrl+Shift+K) will render the document and display a preview of it.
 
