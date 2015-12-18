@@ -25,14 +25,14 @@ Place all data (csv files) into a folder named Data. Place all Analysis scripts 
 
 From your R console, source the Do script (`04_SM_do.R`), this will perform all analysis.
 This script sources scripts to Load data (`01_SM_load.R`) to Clean data (`02_SM_clean.R`) and 
-to perform analsyses (`03_SM_func.R`) [Note that the Functions script has been broken up for each 
+to perform analyses (`03_SM_func.R`) [Note that the Functions script has been broken up for each 
 different part of the analysis, including installing and loading packages (`03_SM_func_pack.R`.]
 
 Figures generated in R will be saved as `.png` files in a folder called Output.
 
 ###Report of R figures and results
 
-To reprodcue R figures and results from statistical analysis, a html report is created using markdown (`Sagebrush_Mort.Rmd`).
+To reproduce R figures and results from statistical analysis, a html report is created using markdown (`Sagebrush_Mort.Rmd`).
 
 To run the report in RStudio the “Knit” command (Ctrl+Shift+K) will render the document and display a preview of it.
 
