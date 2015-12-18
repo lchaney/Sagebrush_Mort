@@ -12,7 +12,7 @@ packagelist <- c("devtools", "survival", "ggplot2", "grid", "cowplot",
 
 new.packages <- packagelist[!(packagelist %in% installed.packages()[,"Package"])]
 
-if(length(new.packages)>0) {install.packages(new.packages)}
+if(length(new.packages)>0) {install.packages(new.packages, dependencies = TRUE)}
 
 #load needed packages
   library(devtools) #allows installation of packages from github
@@ -31,7 +31,8 @@ if(length(new.packages)>0) {install.packages(new.packages)}
   source_url("https://raw.githubusercontent.com/lchaney/ggsurv_m/master/ggsurv_m_with_size_parameters.R")
     #this ggsurv plot allows for custom line size
     #you can find ggsurv function in the GGally package, but this is a custom :)
-    #thanks to Edwin Thoen <edwinthoen@gmail.com> for assistance!
+    #thanks to Edwin Thoen <edwinthoen@gmail.com> for assistance on 
+    #changing script to allow different line sizes/types!
     #more information can be found at github.com/lchaney/ggsurv_m
 
 #==============================================================================================#
