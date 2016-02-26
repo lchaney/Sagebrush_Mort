@@ -129,9 +129,11 @@
 #ephraim survival data with climate
 		
   #not shown is the narrowing down of this model to the two climate variables that gives the best Rsq value
+	#will only use from populations with total sample numbers >2 (removes 7 points -- total of 52 populations)	
+		popdata <- popdat %>% filter(total > 2)
 		
 	#model using proportion died
-		modglm <- glm(cbind(surv, death) ~ gspmtcm + sday + type, data = popdat, family = "quasibinomial")
+		modglm <- glm(cbind(surv, death) ~ gspmtcm + sday + type, data = popdata, family = "quasibinomial")
 	
 	#calculate GLM R squared value
 		glmrsq <- function(model, ... ){
@@ -144,7 +146,7 @@
 	coefclimsurv <- coef(modglm)
 	
 	#just for climate	
-	modglm_clim <- glm(cbind(surv, death) ~ gspmtcm + sday, data = popdat, family = "quasibinomial")
+	modglm_clim <- glm(cbind(surv, death) ~ gspmtcm + sday, data = popdata, family = "quasibinomial")
 	
 	climsurvrsq_2 <- glmrsq(modglm_clim)
 	
