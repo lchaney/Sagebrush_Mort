@@ -132,7 +132,7 @@
 		
 	#model using proportion died
 		modglm <- glm(cbind(surv, death) ~ gspmtcm + sday + type, data = popdat, family = "quasibinomial")
-		
+	
 	#calculate GLM R squared value
 		glmrsq <- function(model, ... ){
 		  (1 - exp((model$dev - model$null)/model$df.null)) / (1 - exp(-model$null/model$df.null))
@@ -143,6 +143,10 @@
 	
 	coefclimsurv <- coef(modglm)
 	
+	#just for climate	
+	modglm_clim <- glm(cbind(surv, death) ~ gspmtcm + sday, data = popdat, family = "quasibinomial")
+	
+	climsurvrsq_2 <- glmrsq(modglm_clim)
 	
 	#one way to examine proportion dead would be looking at the percentage mortality, but this is 
 	#not best because a) errors are not normally distributed, b) the variance is not constant, 
