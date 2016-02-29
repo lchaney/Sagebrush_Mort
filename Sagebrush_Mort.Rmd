@@ -110,11 +110,10 @@ Type: T4x = tetraploid tridentata; T2x = diploid tridentata; W4x = tetraploid wy
 
 ## Table 3
 Generalized linear model for proportion survival of big sagebrush in the Ephraim garden.
-Type, the subspecies ploidy combination, and provenance (source population) climate variables GSPMTCM and SDAY explain most variation in the model (R2 = 0.757). GSPMTCM: interaction of growing season precipitation (Apr-Sep) and mean temperature in coldest moth; SDAY: Julian date of the last freezing day of the spring
+Type, the subspecies ploidy combination, and provenance (source population) climate variables GSPMTCM and SDAY explain most variation in the model (R2 = `r climsurvrsq`). GSPMTCM: interaction of growing season precipitation (Apr-Sep) and mean temperature in coldest moth; SDAY: Julian date of the last freezing day of the spring
 
 ```{r climsurv, echo = FALSE, warning = FALSE, error = FALSE}
 	climsurv
-	climsurvrsq
 	coefclimsurv
 ```
 
