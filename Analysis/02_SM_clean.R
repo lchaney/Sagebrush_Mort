@@ -21,7 +21,8 @@
 	
 	#save unique sample month number dates as calendar dates
 			#ORCHARD
-				sdat_O$date[sdat_O$date == 60] <- "5/20/15"		
+	      sdat_O$date[sdat_O$date == 72] <- "5/2/16"
+	      sdat_O$date[sdat_O$date == 60] <- "5/20/15"		
 				sdat_O$date[sdat_O$date == 53] <- "10/31/14"
 				sdat_O$date[sdat_O$date == 47] <- "4/25/14"
 				sdat_O$date[sdat_O$date == 42] <- "11/12/13"
