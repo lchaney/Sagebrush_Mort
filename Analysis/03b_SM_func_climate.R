@@ -67,6 +67,4 @@
 	mean(winterclimaterange$Maj_min - winterclimaterange$Eph_min, na.rm = TRUE)
 	mean(winterclimaterange$Orch_min - winterclimaterange$Eph_min, na.rm = TRUE)
 	
-
-	
 #==============================================================================================#

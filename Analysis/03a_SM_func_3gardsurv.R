@@ -9,12 +9,6 @@
 #==============================================================================================#
 #3 garden glm
   
-  #restucture data so summarized by each pop and garden
-  surv3counts <- surv3d %>% 
-    group_by(pop, type, garden) %>% 
-    summarise(death = sum(death), total = n()) %>% 
-    mutate(surv = total - death, propdead = death / total)
-
   #glm for the 3 gardens
   fit3 <- glm(cbind(surv, death) ~ pop  + garden + pop:garden, 
               data = surv3counts, family = "quasibinomial")
@@ -43,7 +37,7 @@
 
 
 #==============================================================================================#
-#3 garden survival
+#3 garden survival analysis
 
 	#fit cox ph model to use in kaplain meyer plots
 	sfit_garden <- survfit(Surv(time, death) ~ strata(garden), data=surv3d)
@@ -164,3 +158,112 @@
 		  		  )
 		  		  
 #==============================================================================================#
+		
+#==============================================================================================#
+#3 garden genecological model
+		
+		climvars <- names((surv3clim)[,c("adi", "adimindd0", "d100", "dd0", "dd5", "fday", "ffp", "gsdd5", "gsp", "pratio", 
+		                                 "gspdd5", "gspmtcm", "gsptd", "map", "mapdd5", "mapmtcm", "maptd", "mat", "mmindd0", 
+		                                 "mmax", "mmin", "mtcm", "mtcmgsp", "mtcmmap", "sday", "sdi", "sdimindd0", "tdgsp", 
+		                                 "tdiff", "tdmap", "smrpb", "sprp", "winp", "smrp", "sdimtcm", "dd0map", "dd0gsp")])
+		
+		#FUNCTION
+		sorter.rlm <- function( models, ... ) {
+		  rsquared.glmm.results <- rsquared.glmm(models)
+		  rsquared.glmm.results <- cbind(climvars, rsquared.glmm.results)
+		  rsquared.glmm.results[ order(rsquared.glmm.results[,6], decreasing=TRUE), ]
+		}
+		
+		models1 <- lapply(climvars, function(x) {
+		  glmer(substitute(cbind(surv, death) ~ i  + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim, family=binomial)
+		})
+		
+		sorter.rlm(models1)
+		
+# 		29     tdiff glmerMod binomial logit 0.1869403   0.4478408 571.5610
+# 		13     gsptd glmerMod binomial logit 0.1652440   0.4352558 568.5207
+# 		16   mapmtcm glmerMod binomial logit 0.1613540   0.4346517 566.9694
+		
+		models2 <- lapply(climvars, function(x) {
+		  glmer(substitute(cbind(surv, death) ~ i + tdiff + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim, family=binomial)
+		})
+		
+		sorter.rlm(models2)
+# 		
+# 		34      smrp glmerMod binomial logit 0.1858036   0.4506061 567.3541
+# 		20      mmax glmerMod binomial logit 0.1883275   0.4492052 572.9752
+# 		35   sdimtcm glmerMod binomial logit 0.1819501   0.4486575 567.7172	
+		
+		
+		mod3gar <- glmer(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim, family=binomial)
+		anova(mod3gar)
+		summary(mod3gar)
+		coef(mod3gar)
+		
+		modtest <- glm(cbind(surv, death) ~ tdiff + smrp + type + garden:type + garden, data = surv3clim, family=binomial)
+		anova(modtest)
+		summary(modtest)
+		coef(modtest)
+		
+		modtest2 <- lmer(propdead ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim)
+		anova(modtest2)
+		summary(modtest2)
+		coef(modtest2)
+		
+		
+		models1 <- lapply(climvars, function(x) {
+		  glmer(substitute(cbind(surv, death) ~ i  + (1|type) + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim, family=binomial)
+		})
+		
+		sorter.rlm(models1)
+		
+		models2 <- lapply(climvars, function(x) {
+		  glmer(substitute(cbind(surv, death) ~ i  + mapmtcm + (1|type) + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim, family=binomial)
+		})
+		
+		sorter.rlm(models2)
+		
+		
+		
+		mod3step <- glmer(cbind(surv, death) ~ adi + adimindd0 + d100 + dd0 + dd5 + fday + tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim, family=binomial)
+		
+		mod3step2 <- step(mod3step)
+		
+		#not shown is the narrowing down of this model to the two climate variables that gives the best Rsq value
+		#will only use from populations with total sample numbers >2 (removes 7 points -- total of 52 populations)	
+		surv3clim_filter <- surv3clim %>% filter(total > 2)
+		
+		models1 <- lapply(climvars, function(x) {
+		  glmer(substitute(cbind(surv, death) ~ i  + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim_filter, family=binomial)
+		})
+		
+		sorter.rlm(models1)
+		
+# 		29     tdiff glmerMod binomial logit 0.1674837   0.4308679 540.6547
+# 		16   mapmtcm glmerMod binomial logit 0.1512361   0.4208720 542.1206
+# 		22      mtcm glmerMod binomial logit 0.1489307   0.4192169 545.8160
+		
+		models2 <- lapply(climvars, function(x) {
+		  glmer(substitute(cbind(surv, death) ~ i + tdiff + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim_filter, family=binomial)
+		})
+		
+		sorter.rlm(models2)
+# 		35   sdimtcm glmerMod binomial logit 0.1683486   0.4347859 539.2953
+# 		20      mmax glmerMod binomial logit 0.1705808   0.4338376 541.5944
+# 		34      smrp glmerMod binomial logit 0.1686003   0.4336819 538.7690
+		
+		
+		
+		#one way to examine proportion dead would be looking at the percentage mortality, but this is 
+		#not best because a) errors are not normally distributed, b) the variance is not constant, 
+		#c) response is bounded (by 1 above and by 0 below) and d) we lose information of 
+		#sample size from which the proportion was estimated.
+		#A better method is bind together two vectors using cbind into a single object (y)
+		#comprising the numbers of successes and the number of failures.
+		#Use a generalized linear model that follows the bionomial distribution
+		#Check for overdispersion (residual deviance > residual degrees of freedom), and correct for it by using 
+		#family=quasibinomial rather than binomial
+		#Use the F test with quasibionomial to test significance
+		#You can back transform from logits (z) to proportions (p) by p = 1 / (1 + 1/exp(z))
+		#see Crawley for more information on proportion data
+		

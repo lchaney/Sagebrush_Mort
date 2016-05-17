@@ -78,6 +78,12 @@
 		
 		#use row bind to combine the 3 garden datasets
 		surv3dd <- rbind(sdat_E, sdat_M, sdat_O)
+		
+	#aggregate population level data with counts of survival and dead
+		surv3counts <- surv3dd %>% group_by(pop, type, garden) %>% 
+		                       summarise(death = sum(death), total = n()) %>% 
+		                       mutate(surv = total - death, propdead = death / total)
+		
 #==============================================================================================#
 
 
@@ -91,22 +97,11 @@
 
 
 #==============================================================================================#
-#CLEANING UP survd data
+#CLEANING UP Provenance climate data
 
 	#add derived climate variables
-		svdat <- with(survd, data.frame(
-	     sample,
+	prov_clim <- with(prov_clim, data.frame(
 	     pop,
-	     garden,
-	     ssp,
-	     ploidy,
-	     type,
-	     timedeath,
-	     time,
-	     death,
-	     #long,
-	     #lat,
-	     #elev,
 	     tdiff = mtwm - mtcm,
 	     adi = (sqrt(dd5))/map,
 	     adimindd0 = (sqrt(dd5))/map * mmindd0,
@@ -140,7 +135,7 @@
 	     tdgsp  = (mtwm - mtcm)/gsp,
 	     tdmap  = (mtwm - mtcm)/map,
 	     smrpb = smrpb,
-	     #smrsprpb = smrsprb,
+	     #smrsprpb = smrsprb, (depreciated variable)
 	     sprp = sprp,
 	     winp = winp,
 	     smrp = smrp,
@@ -148,21 +143,7 @@
 	     dd0map = dd0 / map,
 	     dd0gsp = dd0 / gsp))
 		
-		#reorder type
-		svdat$type <- factor(svdat$type, levels = c("T4x", "T2x", "W4x", "V2x", "V4x"))
-		
-	#aggregate population level data with counts of survival and dead
-		popdeath <- aggregate(death ~ pop + type, sum, data = svdat) #sum will give you number dead
-		poptotal <- aggregate(death ~ pop + type, length, data = svdat) #length will give total number
-				names(poptotal) <- c("pop", "type", "total") #rename to meaningful terms (death is really total)
-			popst <- merge(popdeath, poptotal) #merge death and total by population
-				popst$surv <- popst$total - popst$death #get variable of number survived
-				popst$propDead <- popst$death / popst$total #calculate propotion dead
-		pop <- aggregate(. ~ pop + type, mean, data = svdat[,-c(1, 3:5, 7:9)])#aggregate climat variables by pop
-				#mean was chosen, but the climate variables are all the same by pop
-		popdat <- merge(popst, pop, by = c("pop", "type"), all = TRUE) #merge into one data set
-			#this seperates by population and type -- so pops with multiple types are still seperated
-    
-		rm(list = c("popdeath", "poptotal", "popst", "pop"))
-		  #remove the inbetween data frames created so as not to clutter global environment
-		#is there an alternative way to do this?
+		#merge prov. climate data with survival data
+		surv3clim <- merge(surv3counts, prov_clim, by = "pop")
+
+#==============================================================================================#

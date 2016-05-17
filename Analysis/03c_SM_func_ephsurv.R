@@ -9,10 +9,10 @@
 #ephraim survival data
 
 	#fit different survival regressions to determine what distribution is best
-		t_exp <- survreg(Surv(time,death) ~ type, data = svdat, dist = "exponential")
-		t_log <- survreg(Surv(time,death) ~ type, data = svdat, dist = "loglogistic")
-		t_wei <- survreg(Surv(time,death) ~ type, data = svdat, dist = "weibull")
-		t_lnorm <- survreg(Surv(time,death) ~ type, data = svdat, dist = "lognormal")
+		t_exp <- survreg(Surv(time,death) ~ type, data = sdat_E, dist = "exponential")
+		t_log <- survreg(Surv(time,death) ~ type, data = sdat_E, dist = "loglogistic")
+		t_wei <- survreg(Surv(time,death) ~ type, data = sdat_E, dist = "weibull")
+		t_lnorm <- survreg(Surv(time,death) ~ type, data = sdat_E, dist = "lognormal")
 			
 			s_t_exp <- summary(t_exp)$loglik
 			s_t_log <- summary(t_log)$loglik
@@ -22,7 +22,7 @@
 			######   AIC  =2logL+ 2p were p = 2
 		
 	#fit lognormal survival regression		
-		ephsurvlogn <- survreg(Surv(time, death) ~ type, data = svdat, dist = "lognormal")
+		ephsurvlogn <- survreg(Surv(time, death) ~ type, data = sdat_E, dist = "lognormal")
 		summary_ephsurvlogn <- summary(ephsurvlogn)
 			
 	#Kaplien Meyer plot with survival regression curve generated
@@ -39,10 +39,10 @@
                                    predict(ephsurvlogn, newdata = list(type = "V4x"), type = "quantile", p = pct)),
                            group = factor(rep(1:5, each = 99)))
                            
-            	max_time <- max(svdat$time)
+            	max_time <- max(sdat_E$time)
 				predict_dat <- predict_dat[predict_dat$time <= max_time ,]
 				
-		esurvfit <- survfit(Surv(time, death) ~ strata(type), data = svdat) 
+		esurvfit <- survfit(Surv(time, death) ~ strata(type), data = sdat_E) 
 		
 		ephsurvplot_lognorm <- ggsurv_m(esurvfit, 
 										lty.est = 1, 
@@ -75,11 +75,11 @@
 
 				
 		#Use a log rank test to see if there is a difference in survival by TYPE
-		svdatlrtest <- survdiff(formula = Surv(time, death) ~ type, data = svdat)
+		sdat_Elrtest <- survdiff(formula = Surv(time, death) ~ type, data = sdat_E)
 		
 		#now posthoc comparisons between each type
 			#how many comparisons?
-			typesize <- length(unique(svdat$type))
+			typesize <- length(unique(sdat_E$type))
 			
 			#function that will do pairwise comparisons (see here)
 			#http://r.789695.n4.nabble.com/Kaplan-Meier-Post-Hoc-td4647363.html
@@ -89,13 +89,13 @@
 			lrchisqtable <- matrix(0., typesize, typesize) 
 				for (i in 1:typesize) { 
 				 for (j in (1:typesize)[-i]) {
-				   temp <- survdiff(Surv(time, death) ~ type, data = svdat,
+				   temp <- survdiff(Surv(time, death) ~ type, data = sdat_E,
 				                    subset = (type %in% (unique(type))[c(i,j)]))
 				   lrchisqtable[i,j] <- temp$chisq
 				 }
 				  } 
-			rownames(lrchisqtable) <- unique(svdat$type)
-			colnames(lrchisqtable) <- unique(svdat$type)
+			rownames(lrchisqtable) <- unique(sdat_E$type)
+			colnames(lrchisqtable) <- unique(sdat_E$type)
 			
 			lrchisqtable[lower.tri(lrchisqtable, diag = TRUE)] <- NA
 			
@@ -105,8 +105,8 @@
 			pval_lrchisqtagiblebonf <- round(p.adjust(pchisq(lrchisqtable, 1, lower.tail = FALSE), method = "bonferroni"), 5)
 		
 						pval_lrchisqtagiblebonf <- matrix(pval_lrchisqtagiblebonf, nrow = typesize, ncol = typesize)
-						rownames(pval_lrchisqtagiblebonf) <- unique(svdat$type)
-						colnames(pval_lrchisqtagiblebonf) <- unique(svdat$type)
+						rownames(pval_lrchisqtagiblebonf) <- unique(sdat_E$type)
+						colnames(pval_lrchisqtagiblebonf) <- unique(sdat_E$type)
 						 
 		#median survival: the probability of survival after ______ is 50%
 		#similar to LD50
@@ -118,49 +118,8 @@
       #column survival gives the probability of survival at each of those times
 		
 		#population level differences
-		poplrtest <- survdiff(formula = Surv(time, death) ~ pop, data = svdat)
-		popmedsurv <- survfit(Surv(time, death) ~ strata(pop), data = svdat) 
+		poplrtest <- survdiff(formula = Surv(time, death) ~ pop, data = sdat_E)
+		popmedsurv <- survfit(Surv(time, death) ~ strata(pop), data = sdat_E) 
 		popprobsurv <- summary(popmedsurv, times = c(12, 24, 36, 48, 59))
 		
-#==============================================================================================#
-		
-		
-#==============================================================================================#
-#ephraim survival data with climate
-		
-  #not shown is the narrowing down of this model to the two climate variables that gives the best Rsq value
-	#will only use from populations with total sample numbers >2 (removes 7 points -- total of 52 populations)	
-		popdata <- popdat %>% filter(total > 2)
-		
-	#model using proportion died
-		modglm <- glm(cbind(surv, death) ~ gspmtcm + sday + type, data = popdata, family = "quasibinomial")
-	
-	#calculate GLM R squared value
-		glmrsq <- function(model, ... ){
-		  (1 - exp((model$dev - model$null)/model$df.null)) / (1 - exp(-model$null/model$df.null))
-		}
-		
-	climsurv <- anova(modglm, test = "F")
-	climsurvrsq <- glmrsq(modglm)
-	
-	coefclimsurv <- coef(modglm)
-	
-	#just for climate	
-	modglm_clim <- glm(cbind(surv, death) ~ gspmtcm + sday, data = popdata, family = "quasibinomial")
-	
-	climsurvrsq_2 <- glmrsq(modglm_clim)
-	
-	#one way to examine proportion dead would be looking at the percentage mortality, but this is 
-	#not best because a) errors are not normally distributed, b) the variance is not constant, 
-	#c) response is bounded (by 1 above and by 0 below) and d) we lose information of 
-	#sample size from which the proportion was estimated.
-	#A better method is bind together two vectors using cbind into a single object (y)
-	#comprising the numbers of successes and the number of failures.
-	#Use a generalized linear model that follows the bionomial distribution
-	#Check for overdispersion (residual deviance > residual degrees of freedom), and correct for it by using 
-	#family=quasibinomial rather than binomial
-	#Use the F test with quasibionomial to test significance
-	#You can back transform from logits (z) to proportions (p) by p = 1 / (1 + 1/exp(z))
-	#see Crawley for more information on proportion data
-	
 #==============================================================================================#

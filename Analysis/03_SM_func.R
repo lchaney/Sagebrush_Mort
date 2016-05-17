@@ -20,9 +20,6 @@
   
 #==============================================================================================#
 #source functions for each subpart of the analysis
-  #install and load required packages
-  source('Analysis/03_SM_func_pack.R')
-  
   #three garden survival
 	source('Analysis/03a_SM_func_3gardsurv.R')
 
