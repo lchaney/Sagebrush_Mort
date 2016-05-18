@@ -7,7 +7,7 @@
 
 #this data set has survival (last data collection in May 2015) for all three gardens
 
-	surv3d <- read.csv("Data/3gardsurv_2016.csv")
+	surv3d <- read.csv("Data/3gardsurv_2015.csv")
 
 
 #climate data set has daily avg, min, and max temperature for three garden sites
