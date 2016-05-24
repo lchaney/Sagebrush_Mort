@@ -19,7 +19,7 @@
 		
 		
 #this data set is Provenance climate data (i.e., seed source population climate)
-	prov_clim <- read.csv("Data/prov_clim.csv")
+	prov_clim <- read.csv("Data/prov_clim_contemp.csv")
 	
 	
 #install and load required packages

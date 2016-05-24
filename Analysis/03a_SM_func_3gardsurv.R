@@ -162,11 +162,8 @@
 #==============================================================================================#
 #3 garden genecological model
 		
-# 		climvars <- names((surv3clim)[,c("adi", "adimindd0", "d100", "dd0", "dd5", "fday", "ffp", "gsdd5", "gsp", "pratio", 
-# 		                                 "gspdd5", "gspmtcm", "gsptd", "map", "mapdd5", "mapmtcm", "maptd", "mat", "mmindd0", 
-# 		                                 "mmax", "mmin", "mtcm", "mtcmgsp", "mtcmmap", "sday", "sdi", "sdimindd0", "tdgsp", 
-# 		                                 "tdiff", "tdmap", "smrpb", "sprp", "winp", "smrp", "sdimtcm", "dd0map", "dd0gsp")])
-# 		
+# 		climvars <- names((surv3clim)[,-c(1:7)])
+# 
 # 		#FUNCTION
 # 		sorter.rlm <- function( models, ... ) {
 # 		  rsquared.glmm.results <- rsquared.glmm(models)
@@ -179,135 +176,109 @@
 # 		})
 # 		
 # 		sorter.rlm(models1)
-# 		
-# # 		29     tdiff glmerMod binomial logit 0.1869403   0.4478408 571.5610
-# # 		13     gsptd glmerMod binomial logit 0.1652440   0.4352558 568.5207
-# # 		16   mapmtcm glmerMod binomial logit 0.1613540   0.4346517 566.9694
+# 
+# # 		37     tdiff glmerMod binomial logit 0.1782063   0.4504604 543.0587
+# # 		8    dd5mtcm glmerMod binomial logit 0.1643283   0.4385943 557.1595
+# # 		13    gspdd5 glmerMod binomial logit 0.1699539   0.4382220 558.3863
 # 		
 # 		models2 <- lapply(climvars, function(x) {
 # 		  glmer(substitute(cbind(surv, death) ~ i + tdiff + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim, family=binomial)
 # 		})
 # 		
 # 		sorter.rlm(models2)
-# # 		
-# # 		34      smrp glmerMod binomial logit 0.1858036   0.4506061 567.3541
-# # 		20      mmax glmerMod binomial logit 0.1883275   0.4492052 572.9752
-# # 		35   sdimtcm glmerMod binomial logit 0.1819501   0.4486575 567.7172	
-# 		
-# 		
+# # 		33      smrp glmerMod binomial logit 0.1835436   0.4558232 541.2585
+# # 		12       gsp glmerMod binomial logit 0.1818801   0.4535886 542.1341
+# # 		15     gsptd glmerMod binomial logit 0.1820689   0.4533774 542.5865
+# 
+# 		 		
 # 		mod3gar <- glmer(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim, family=binomial)
-#  		#anova(mod3gar)
-#  		#summary(mod3gar)
-#  		#coef(mod3gar)
-#  		#rsquared.glmm(mod3gar)
+#  		anova(mod3gar)
+#  		summary(mod3gar)
+#  		coef(mod3gar)
+#  		rsquared.glmm(mod3gar)
 #  		
 #  		library(afex)
 #  		gar3glm <- mixed(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim, family = binomial, method = "LRT")
 #  		anova(gar3glm)
 #  		nice(gar3glm)
+# 
 #  		
-#  		mod3gar_tdiff <- glmer(cbind(surv, death) ~ smrp + type + (1|garden:type) + (1|garden), data = surv3clim, family=binomial)
-#  		mod3gar_smrp <- glmer(cbind(surv, death) ~ tdiff + type + (1|garden:type) + (1|garden), data = surv3clim, family=binomial)
-#  		mod3gar_type <- glmer(cbind(surv, death) ~ tdiff + smrp + (1|garden:type) + (1|garden), data = surv3clim, family=binomial)
-#  		mod3gar_garden <- glmer(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type), data = surv3clim, family=binomial)
-#  		mod3gar_gartype <- glmer(cbind(surv, death) ~ tdiff + smrp + type + (1|garden), data = surv3clim, family=binomial)
-#  		
-#  		anova(mod3gar, mod3gar_garden)
-#  		anova(mod3gar, mod3gar_gartype)
-#  		
-# 		
-# 		models1 <- lapply(climvars, function(x) {
-# 		  glmer(substitute(cbind(surv, death) ~ i  + (1|type) + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim, family=binomial)
-# 		})
-# 		
-# 		sorter.rlm(models1)
-# 		
-# 		models2 <- lapply(climvars, function(x) {
-# 		  glmer(substitute(cbind(surv, death) ~ i  + mapmtcm + (1|type) + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim, family=binomial)
-# 		})
-# 		
-# 		sorter.rlm(models2)
-# 		
-# 		
-# 		#not shown is the narrowing down of this model to the two climate variables that gives the best Rsq value
-# 		#will only use from populations with total sample numbers >2 (removes 7 points -- total of 52 populations)	
+# # 		#not shown is the narrowing down of this model to the two climate variables that gives the best Rsq value
+# # 		#will only use from populations with total sample numbers >2 (removes 7 points -- total of 52 populations)	
 # 		surv3clim_filter <- surv3clim %>% filter(total > 2)
-# 		
+# # 		
 # 		models1 <- lapply(climvars, function(x) {
 # 		  glmer(substitute(cbind(surv, death) ~ i  + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim_filter, family=binomial)
 # 		})
 # 		
 # 		sorter.rlm(models1)
+# 
+# # 		37     tdiff glmerMod binomial logit 0.1655153   0.4341422 520.1423
+# # 		8    dd5mtcm glmerMod binomial logit 0.1610652   0.4296736 533.0327
+# # 		18   mapmtcm glmerMod binomial logit 0.1565902   0.4243131 531.8999
 # 		
-# # 		29     tdiff glmerMod binomial logit 0.1674837   0.4308679 540.6547
-# # 		16   mapmtcm glmerMod binomial logit 0.1512361   0.4208720 542.1206
-# # 		22      mtcm glmerMod binomial logit 0.1489307   0.4192169 545.8160
+# 		models2 <- lapply(climvars, function(x) {
+# 		  glmer(substitute(cbind(surv, death) ~ i + tdiff + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim_filter, family=binomial)
+# 		})
 # 		
-# # 		models2 <- lapply(climvars, function(x) {
-# # 		  glmer(substitute(cbind(surv, death) ~ i + tdiff + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim_filter, family=binomial)
-# # 		})
-# # 		
-# # 		sorter.rlm(models2)
-# # # 		35   sdimtcm glmerMod binomial logit 0.1683486   0.4347859 539.2953
-# # # 		20      mmax glmerMod binomial logit 0.1705808   0.4338376 541.5944
-# # # 		34      smrp glmerMod binomial logit 0.1686003   0.4336819 538.7690
-# # 		
-# # 		with(prov_clim, cor.test(tdiff, sdimtcm))
-# # 		with(prov_clim, cor.test(tdiff, mmax))
-# # 		with(prov_clim, cor.test(tdiff, smrp))
-# # 		with(prov_clim, cor.test(tdiff, mmax))
-#  		
-#  		
+# 		sorter.rlm(models2)
+# # 		33      smrp glmerMod binomial logit 0.1710303   0.4396341 518.4304
+# # 		18   mapmtcm glmerMod binomial logit 0.1696223   0.4386990 519.3230
+# # 		12       gsp glmerMod binomial logit 0.1704890   0.4383489 518.0615
+# 
+# # # 		with(prov_clim, cor.test(tdiff, smrp))
+# 
+# #  		
+# #  		
 #  		mod3gar_fil <- glmer(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim_filter, family=binomial)
 # 		
-#  		confint(mod3gar_fil, level = .2)
-#  		#     gar3glm_fil <- mixed(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim_filter, family = binomial, method = "LRT")
-#  		#  		anova(gar3glm_fil)
-#  		#  		nice(gar3glm_fil)
-#  		#  		anova(mod3gar_fil, update(mod3gar_fil, .~.-(1|garden)))
-#  		#  		anova(mod3gar_fil, update(mod3gar_fil, .~.-(1|garden:type)))
-#  		
-#  		mod3gar_fil
-#  		summary(mod3gar_fil)
-#  		
-#  		
-#  		surv3clim_filter3 <- surv3clim %>% filter(total > 3)
-#  		
+# #  		confint(mod3gar_fil, level = .2)
+#  		    gar3glm_fil <- mixed(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim_filter, family = binomial, method = "LRT")
+#  		 		anova(gar3glm_fil)
+#  		 		anova(mod3gar_fil, update(mod3gar_fil, .~.-(1|garden)))
+#  		 		anova(mod3gar_fil, update(mod3gar_fil, .~.-(1|garden:type)))
+# #  		
+# #  		mod3gar_fil
+# #  		summary(mod3gar_fil)
+# #  		
+# #  		
+# #  		surv3clim_filter3 <- surv3clim %>% filter(total > 3)
+# #  		
 #  		models1 <- lapply(climvars, function(x) {
 #  		   		  glmer(substitute(cbind(surv, death) ~ i  + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim_filter3, family=binomial)
 #  		   		})
 #  		   		
 #  		   		sorter.rlm(models1)
-#  		
-# #  		   		29     tdiff glmerMod binomial logit 0.1541979   0.4297497 498.1254
-# #  		   		22      mtcm glmerMod binomial logit 0.1431645   0.4186393 511.6490
-# #  		   		16   mapmtcm glmerMod binomial logit 0.1437778   0.4178430 509.5565
-#  		   		
-#  		   		
+# # #  		
+# #  		   		37     tdiff glmerMod binomial logit 0.1597568   0.4329849 488.6098
+# #  		   		8    dd5mtcm glmerMod binomial logit 0.1535619   0.4265480 502.1137
+# #  		   		24      mtcm glmerMod binomial logit 0.1490470   0.4222346 502.2943
+# #  		   		
+# #  		   		
 #  		   		models2 <- lapply(climvars, function(x) {
 #  		   		  glmer(substitute(cbind(surv, death) ~ i + tdiff + type + (1|garden:type) + (1|garden), list(i = as.name(x))), data = surv3clim_filter3, family=binomial)
 #  		   		})
 #  		   		
 #  		   		sorter.rlm(models2)
 #  		   		
-#  		   		20      mmax glmerMod binomial logit 0.1579475   0.4342829 497.7331
-#  		   		34      smrp glmerMod binomial logit 0.1576398   0.4329113 497.7432
-#  		   		16   mapmtcm glmerMod binomial logit 0.1565993   0.4322491 498.2399
- 		   		
+# #  		   		33      smrp glmerMod binomial logit 0.1652061   0.4382776 486.8903
+# #  		   		21      mmax glmerMod binomial logit 0.1639461   0.4382324 487.9585
+# #  		   		18   mapmtcm glmerMod binomial logit 0.1634424   0.4369257 487.7818
 #  		   		
-#  		   		mod3gar_fil3 <- glmer(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim_filter3, family=binomial)
-#  		   		
-#  		   		confint(mod3gar_fil, level = .2)
+# #  		   		
+#   		   		mod3gar_fil3 <- glmer(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim_filter3, family=binomial)
+# #  		   		
+# #  		   		confint(mod3gar_fil, level = .2)
 #  		   		     gar3glm_fil3 <- mixed(cbind(surv, death) ~ tdiff + smrp + type + (1|garden:type) + (1|garden), data = surv3clim_filter3, family = binomial, method = "LRT")
 #  		   		  		anova(gar3glm_fil3)
 #  		   		  		nice(gar3glm_fil3)
 #  		   		  		anova(mod3gar_fil3, update(mod3gar_fil3, .~.-(1|garden)))
 #  		   		  		anova(mod3gar_fil3, update(mod3gar_fil3, .~.-(1|garden:type)))
+# #  		   		
+# #  		   		mod3gar_fil
+# #  		   		summary(mod3gar_fil3)
+# #  		   		
 #  		   		
-#  		   		mod3gar_fil
-#  		   		summary(mod3gar_fil3)
-#  		   		
- 		   		
  		   		            
 		#one way to examine proportion dead would be looking at the percentage mortality, but this is 
 		#not best because a) errors are not normally distributed, b) the variance is not constant, 
