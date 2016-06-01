@@ -177,7 +177,7 @@
 
  				mod3gar_fil
 
- 		   		            
+ 		   	rsquared.glmm(mod3gar_fil)	            
 		#one way to examine proportion dead would be looking at the percentage mortality, but this is 
 		#not best because a) errors are not normally distributed, b) the variance is not constant, 
 		#c) response is bounded (by 1 above and by 0 below) and d) we lose information of 

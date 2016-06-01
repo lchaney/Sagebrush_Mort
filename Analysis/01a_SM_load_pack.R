@@ -9,7 +9,7 @@
 #install and load the following packages for graphing
 packagelist <- c("devtools", "survival", "ggplot2", "grid", "cowplot", 
                  "gridExtra", "scales", "doBy", "tidyr", "dplyr", 
-                 "rmarkdown", "lme4", "lmerTest")
+                 "rmarkdown", "lme4")
 
 new.packages <- packagelist[!(packagelist %in% installed.packages()[,"Package"])]
 
@@ -28,7 +28,6 @@ if(length(new.packages)>0) {install.packages(new.packages, dependencies = TRUE)}
   library(dplyr) #used for data wrangling
   library(rmarkdown) #used to compile final report
   library(lme4) #used for mixed effect linear models
-  library(lmerTest) #used to significance test in for lme
 
 #source custom ggsurv package from Edwin Thoen
   source_url("https://raw.githubusercontent.com/lchaney/ggsurv_m/master/ggsurv_m_with_size_parameters.R")
@@ -40,11 +39,6 @@ if(length(new.packages)>0) {install.packages(new.packages, dependencies = TRUE)}
 
 #source R-squared for generalized linear mixed-effects models by Jon Lefcheck and Juan Sebastian Casallas
   source_url("https://raw.githubusercontent.com/jslefche/rsquared.glmm/master/rsquaredglmm.R")
-
-  #function to calculate GLM R squared value
-  glmrsq <- function(model, ... ){
-    (1 - exp((model$dev - model$null)/model$df.null)) / (1 - exp(-model$null/model$df.null))
-  }
   
 #==============================================================================================#
 
