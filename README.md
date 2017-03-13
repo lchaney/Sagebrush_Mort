@@ -1,22 +1,22 @@
-#Climate at the local and landscape level drive adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata)
+#Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata)
 
 
-[Lindsay Chaney] (http://www.lindsaychaney.com) and [Bryce Richardson] (http://www.fs.fed.us/rmrs-beta/people/richardson-bryce)
+[Lindsay Chaney] (http://www.lindsaychaney.com), [Bryce Richardson] (http://www.fs.fed.us/rmrs-beta/people/richardson-bryce), and [Matt Germino] (https://fresc.usgs.gov/people/Profile.aspx?Emp_ID=1204)
 
 This repository contains all the code used in the manuscript:
 
-enter citation here
+Chaney, L., Richardson, B. A., & Germino, M. J. (2016). Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata). Evolutionary Applications. http://dx.doi.org/10.1111/eva.12440
 
-**Abstract:** 	A genecological approach was used to explore genetic variation in survival in in Artemisia tridentata (big sagebrush). Artemisia tridentata is a fundamental shrub species in western North America, large declines of this species and its affect on associated wildlife has resulted in increased conservation and restoration efforts. Common garden experiments were established at three sites with seedlings from 55 source-populations. Populations included each of the three predominant subspecies, and cytotype variation within subspecies. Survival was monitored for five-years to assess differences in survival between gardens and populations. We found evidence of adaptive genetic variation for survival in A. tridentata. Survival within gardens differed by population and a large proportion of this variation is explained by climate of the seed source. Plants from more continental climates (greater summer-winter temperature differences) had the highest levels of survival, while populations from warmer and drier sites had the lowest levels of survival. Survival differed between gardens as result of minimum temperatures. These climatic differences among gardens are likely to be associated with atmospheric decoupling and/or cold air drainage. Understanding how genetic variation is arrayed across the landscape and its association with climate can greatly enhance the success of restoration and conservation.
+**Abstract:** 	A genecological approach was used to explore genetic variation for survival in Artemisia tridentata (big sagebrush). Artemisia tridentata is a widespread and foundational shrub species in western North America. This species has become extremely fragmented, to the detriment of dependent wildlife, and efforts to restore it are now a land management priority. Common-garden experiments were established at three sites with seedlings from 55 source-populations. Populations included each of the three predominant subspecies, and cytotype variations. Survival was monitored for 5 years to assess differences in survival between gardens and populations. We found evidence of adaptive genetic variation for survival. Survival within gardens differed by source-population and a substantial proportion of this variation was explained by seed climate of origin. Plants from areas with the coldest winters had the highest levels of survival, while populations from warmer and drier sites had the lowest levels of survival. Survival was lowest, 36%, in the garden that was prone to the lowest minimum temperatures. These results suggest the importance of climatic driven genetic differences and their effect on survival. Understanding how genetic variation is arrayed across the landscape, and its association with climate can greatly enhance the success of restoration and conservation.
 
 ##Data
 
-Data has been archived for public access at Dryad (link)
+Data has been archived for public access at Dryad (http://datadryad.org/resource/doi:10.5061/dryad.32s2t)
 
 To cite this data:
 
 ```
-data citation
+Chaney L, Richardson BA, Germino MJ (2016) Data from: Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata). Dryad Digital Repository. http://dx.doi.org/10.5061/dryad.32s2t
 ```
 
 ##Running
@@ -44,10 +44,8 @@ To run the report in RStudio the “Knit” command (Ctrl+Shift+K) will render t
 
 ## Citation
 
-For archival purposes, the code used to produce figures for publication has been lodged with figshare here (link).
-
 To cite this code:
 
 ```
-citation
+Chaney L, Richardson BA, Germino MJ (2016) Analysis for: Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata). Git Hub. https://github.com/lchaney/Sagebrush_Mort
 ```
