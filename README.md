@@ -18,7 +18,7 @@ Data has been archived for public access at Dryad (http://datadryad.org/resource
 To cite this data:
 
 ```
-Chaney L, Richardson BA, Germino MJ (2016) Data from: Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata). Dryad Digital Repository. http://dx.doi.org/10.5061/dryad.32s2t
+Chaney L, Richardson BA, Germino MJ (2017) Data from: Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata). Dryad Digital Repository. http://dx.doi.org/10.5061/dryad.32s2t
 ```
 
 ##Running
@@ -49,5 +49,5 @@ To run the report in RStudio the “Knit” command (Ctrl+Shift+K) will render t
 To cite this code:
 
 ```
-Chaney L, Richardson BA, Germino MJ (2016) Analysis for: Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata). Git Hub. https://github.com/lchaney/Sagebrush_Mort
+Chaney L, Richardson BA, Germino MJ (2017) Analysis for: Climate drives adaptive genetic responses associated with survival in big sagebrush (Artemisia tridentata). Git Hub. https://github.com/lchaney/Sagebrush_Mort
 ```

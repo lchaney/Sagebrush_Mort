@@ -1,8 +1,8 @@
 #==============================================================================================#
-# Script created by Lindsay Chaney 2015 - lchaney@byu.edu
+# Script created by Lindsay Chaney 2015 - lindsay.chaney@snow.edu
 # Script created in version R 3.1.3
 # This script is used for FUNCTIONS needed for *Climate*
-# Chaney et al 2015 Sagebrush mortatlity paper
+# Chaney et al 2017 Sagebrush mortatlity paper
 #==============================================================================================#
 
 
